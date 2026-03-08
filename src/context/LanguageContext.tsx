@@ -11,7 +11,7 @@ import { Lang, translations } from "@/lib/translations";
 
 const STORAGE_KEY = "exact-lang";
 
-type T = (typeof translations)["en"];
+type T = (typeof translations)[Lang];
 
 const LanguageContext = createContext<{
   lang: Lang;
