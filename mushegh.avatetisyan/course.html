@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Course details – view full description, schedule, and register. Courses by Mushegh Avetisyan in Yerevan, Armenia.">
+  <meta name="keywords" content="course, Mushegh Avetisyan, project management, coaching, Yerevan, Armenia, register">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#b84a1a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Course – Mushegh Avetisyan">
+  <meta property="og:description" content="View course details and register. Courses by Mushegh Avetisyan.">
+  <meta property="og:url" content="https://yoursite.com/course.html">
+  <meta property="og:image" content="https://yoursite.com/images/247996577_426979605542154_1945731558537780151_n.jpg">
+  <meta property="og:image:alt" content="Mushegh Avetisyan – Courses">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="hy_AM">
+  <meta property="og:site_name" content="Mushegh Avetisyan – Courses">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://yoursite.com/course.html">
+  <link rel="alternate" hreflang="en" href="https://yoursite.com/course.html">
+  <link rel="alternate" hreflang="hy" href="https://yoursite.com/course.html">
+  <link rel="alternate" hreflang="x-default" href="https://yoursite.com/course.html">
+  <meta name="site-base-url" content="https://yoursite.com">
+  <title>Course Details – Mushegh Avetisyan</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+</head>
+<body class="course-detail">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Mushegh Avetisyan</a>
+      <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a href="index.html" data-i18n="navCourses">Courses</a>
+        <a href="about.html" data-i18n="navAbout">About</a>
+        <span class="lang-switcher" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="hy" aria-pressed="false">HY</button>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <a href="index.html" class="course-detail__back" aria-label="Back to courses" data-i18n="backToCourses">← Back to courses</a>
+
+      <div id="course-detail-root">
+        <!-- Populated by JS from Strapi or fallback -->
+        <div id="course-loading" class="loading" aria-live="polite" data-i18n="loadingCourse">Loading course…</div>
+        <div id="course-error" class="error-message" role="alert" hidden></div>
+        <div id="course-not-found" class="course-detail__not-found" hidden>
+          <p data-i18n="courseNotFound">Course not found.</p>
+          <a href="index.html" data-i18n="returnToCourses">Return to all courses</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <span data-i18n="footerCopy">Mushegh Avetisyan. All rights reserved.</span></p>
+    </div>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/course-detail.js"></script>
+  <script src="js/header.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
