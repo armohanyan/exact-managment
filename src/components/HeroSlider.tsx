@@ -8,17 +8,17 @@ const SLIDES = [
   {
     image:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80",
-    alt: "Construction site",
+    altKey: "heroSlide1Alt",
   },
   {
     image:
       "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1600&q=80",
-    alt: "Modern building",
+    altKey: "heroSlide2Alt",
   },
   {
     image:
       "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80",
-    alt: "Construction project",
+    altKey: "heroSlide3Alt",
   },
 ];
 
@@ -46,9 +46,11 @@ export default function HeroSlider() {
         >
           <Image
             src={slide.image}
-            alt={slide.alt}
+            alt={t[slide.altKey as keyof typeof t]}
             fill
-            className="object-cover"
+            className={`object-cover transition-transform duration-[7000ms] ${
+              i === index ? "scale-105" : "scale-100"
+            }`}
             priority={i === 0}
             sizes="100vw"
           />
@@ -60,13 +62,13 @@ export default function HeroSlider() {
       ))}
 
       <div className="container-narrow relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent md:text-sm">
+        <p className="mb-3 animate-fade-up text-xs font-semibold uppercase tracking-[0.2em] text-accent md:text-sm">
           {t.heroHomeSubtitle}
         </p>
-        <h1 className="heading-display max-w-4xl text-3xl text-white drop-shadow-md md:text-5xl lg:text-6xl">
+        <h1 className="heading-display animate-fade-up max-w-4xl text-3xl text-white drop-shadow-md md:text-5xl lg:text-6xl">
           {t.heroHomeTitle}
         </h1>
-        <p className="text-lead mx-auto mt-6 max-w-2xl text-white/95 drop-shadow-sm">
+        <p className="text-lead animate-fade-in mx-auto mt-6 max-w-2xl text-white/95 drop-shadow-sm">
           {t.heroHomeLead}
         </p>
       </div>
@@ -76,7 +78,7 @@ export default function HeroSlider() {
         type="button"
         onClick={() => setIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length)}
         className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-2.5 text-white backdrop-blur-sm transition-colors hover:bg-white/30 md:left-6"
-        aria-label="Previous slide"
+        aria-label={t.heroPrevSlide}
       >
         <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -86,7 +88,7 @@ export default function HeroSlider() {
         type="button"
         onClick={() => setIndex((i) => (i + 1) % SLIDES.length)}
         className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-2.5 text-white backdrop-blur-sm transition-colors hover:bg-white/30 md:right-6"
-        aria-label="Next slide"
+        aria-label={t.heroNextSlide}
       >
         <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -103,9 +105,16 @@ export default function HeroSlider() {
             className={`h-2.5 w-2.5 rounded-full transition-all ${
               i === index ? "w-8 bg-accent" : "bg-white/60 hover:bg-white/80"
             }`}
-            aria-label={`Go to slide ${i + 1}`}
+            aria-label={`${t.heroGoToSlide} ${i + 1}`}
           />
         ))}
+      </div>
+      <div className="absolute bottom-0 left-0 z-20 h-1 w-full bg-white/20">
+        <div
+          key={index}
+          className="h-full bg-accent animate-[progress_5000ms_linear_forwards]"
+          style={{ width: "100%" }}
+        />
       </div>
     </section>
   );

@@ -10,60 +10,60 @@ const services = [
   {
     titleKey: "service1Title" as const,
     itemKeys: [
-      "Strategic planning",
-      "Coordination of design works",
-      "Tender organization",
-      "Contractor selection",
-      "Permit and documentation management",
-      "Financial monitoring",
-      "Full development project management",
+      "service1Item1",
+      "service1Item2",
+      "service1Item3",
+      "service1Item4",
+      "service1Item5",
+      "service1Item6",
+      "service1Item7",
     ],
     num: "01",
     image:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
-    imageAlt: "Development and architecture",
+    imageAltKey: "service1ImageAlt",
   },
   {
     titleKey: "service2Title" as const,
     itemKeys: [
-      "Construction planning",
-      "Scheduling",
-      "Contractor coordination",
-      "Quality control",
-      "Collaboration with technical supervision",
-      "Acceptance and documentation",
+      "service2Item1",
+      "service2Item2",
+      "service2Item3",
+      "service2Item4",
+      "service2Item5",
+      "service2Item6",
     ],
     num: "02",
     image:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
-    imageAlt: "Construction site",
+    imageAltKey: "service2ImageAlt",
   },
   {
     titleKey: "service3Title" as const,
     itemKeys: [
-      "Tender documentation preparation",
-      "Contractor selection",
-      "Proposal evaluation",
-      "Contract coordination",
+      "service3Item1",
+      "service3Item2",
+      "service3Item3",
+      "service3Item4",
     ],
     num: "03",
     image:
       "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
-    imageAlt: "Tender and contracts",
+    imageAltKey: "service3ImageAlt",
   },
   {
     titleKey: "service4Title" as const,
     itemKeys: [
-      "Budgeting",
-      "Scheduling",
-      "Cost monitoring",
-      "Risk management",
-      "Financial reporting",
+      "service4Item1",
+      "service4Item2",
+      "service4Item3",
+      "service4Item4",
+      "service4Item5",
     ],
     num: "04",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    imageAlt: "Planning and cost control",
+    imageAltKey: "service4ImageAlt",
   },
 ];
 
@@ -74,14 +74,14 @@ export default function ServicesPage() {
     <>
       <Hero title={t.servicesTitle} lead={t.servicesLead} />
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <div className="space-y-16 md:space-y-24">
-            {services.map(({ titleKey, itemKeys, num, image, imageAlt }, i) => {
+            {services.map(({ titleKey, itemKeys, num, image, imageAltKey }, i) => {
               const imageLeft = i % 2 === 0;
               return (
                 <article
                   key={titleKey}
-                  className="grid gap-8 rounded-2xl border border-border bg-[#fafaf8] shadow-lg overflow-hidden md:grid-cols-2 md:gap-0 md:even:grid-flow-dense"
+                  className="grid gap-8 overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:grid-cols-2 md:gap-0 md:even:grid-flow-dense"
                 >
                   <div
                     className={`relative aspect-[16/10] md:aspect-auto md:min-h-[320px] ${
@@ -90,7 +90,7 @@ export default function ServicesPage() {
                   >
                     <Image
                       src={image}
-                      alt={imageAlt}
+                      alt={t[imageAltKey as keyof typeof t]}
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, 50vw"
@@ -112,7 +112,7 @@ export default function ServicesPage() {
                     </h2>
                     <ul className="mt-5 space-y-2 pl-4 text-[#4d4d4d] leading-relaxed [list-style-type:disc]">
                       {itemKeys.map((item) => (
-                        <li key={item}>{item}</li>
+                        <li key={item}>{t[item as keyof typeof t]}</li>
                       ))}
                     </ul>
                   </div>
@@ -123,7 +123,7 @@ export default function ServicesPage() {
         </div>
       </section>
       <section className="section-pad bg-primary">
-        <div className="container-narrow text-center">
+        <div className="container-narrow animate-fade-up text-center">
           <p className="text-lg text-white/90 max-w-2xl mx-auto">
             {t.servicesGectaroNote}
           </p>
@@ -137,7 +137,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="section-pad">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <CTA
             title={t.discussProject}
             description={t.ctaStartDesc}

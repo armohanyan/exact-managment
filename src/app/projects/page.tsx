@@ -15,19 +15,19 @@ const PROJECT_IMAGES = [
 
 const ongoingProjects = [
   {
-    name: "Zephyr Residential District",
+    nameKey: "projZephyrName",
     descKey: "projZephyrDesc" as const,
     num: "01",
     image: PROJECT_IMAGES[0],
   },
   {
-    name: "Townhouses in Yeghvard",
+    nameKey: "projYeghvardName",
     descKey: "projYeghvardDesc" as const,
     num: "02",
     image: PROJECT_IMAGES[1],
   },
   {
-    name: "Nur Residential Complex",
+    nameKey: "projNurName",
     descKey: "projNurDesc" as const,
     num: "03",
     image: PROJECT_IMAGES[2],
@@ -36,13 +36,13 @@ const ongoingProjects = [
 
 const completedProjects = [
   {
-    name: "Kanach Tagh Residential District",
+    nameKey: "projKanachName",
     descKey: "projKanachDesc" as const,
     num: "04",
     image: PROJECT_IMAGES[3],
   },
   {
-    name: "Level 16 Residential Complex",
+    nameKey: "projLevel16Name",
     descKey: "projLevel16Desc" as const,
     num: "05",
     image: PROJECT_IMAGES[4],
@@ -67,7 +67,7 @@ function ProjectRow({
   t: (k: string) => string;
 }) {
   return (
-    <article className="grid gap-0 overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-xl md:grid-cols-2">
+    <article className="grid gap-0 overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl md:grid-cols-2">
       <div
         className={`relative aspect-[16/10] md:aspect-auto md:min-h-[380px] ${
           imageLeft ? "md:col-start-1" : "md:col-start-2"
@@ -138,7 +138,7 @@ export default function ProjectsPage() {
       <Hero title={t.projectsTitle} lead={t.projectsLead} />
 
       <section className="section-pad bg-[#f5f4f0]">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section max-w-2xl">
             {t.ongoingProjects}
           </h2>
@@ -149,8 +149,8 @@ export default function ProjectsPage() {
           <div className="mt-14 space-y-8 md:space-y-12">
             {ongoingProjects.map((p, i) => (
               <ProjectRow
-                key={p.name}
-                name={p.name}
+                key={p.nameKey}
+                name={t[p.nameKey as keyof typeof t]}
                 descKey={p.descKey}
                 num={p.num}
                 image={p.image}
@@ -164,7 +164,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section max-w-2xl">
             {t.completedProjects}
           </h2>
@@ -172,8 +172,8 @@ export default function ProjectsPage() {
           <div className="mt-14 space-y-8 md:space-y-12">
             {completedProjects.map((p, i) => (
               <ProjectRow
-                key={p.name}
-                name={p.name}
+                key={p.nameKey}
+                name={t[p.nameKey as keyof typeof t]}
                 descKey={p.descKey}
                 num={p.num}
                 image={p.image}
@@ -187,7 +187,7 @@ export default function ProjectsPage() {
       </section>
 
       <section className="section-pad">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <CTA
             title={t.projectsCta}
             buttonText={t.getInTouch}

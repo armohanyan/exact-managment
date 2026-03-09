@@ -17,7 +17,7 @@ export default function ContactPage() {
 
       {/* Company details + contact form in one row */}
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
             {/* Left: company details + map */}
             <div className="overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-xl">
@@ -54,7 +54,7 @@ export default function ContactPage() {
               </div>
               <div className="relative aspect-[4/3] md:aspect-[3/2]">
                 <iframe
-                  title="Office location map"
+                  title={t.officeMapLabel}
                   src={MAP_EMBED_URL}
                   width="100%"
                   height="100%"
@@ -68,7 +68,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right: contact form */}
-            <div className="rounded-2xl border border-border bg-[#fafaf8] p-8 shadow-xl md:p-10">
+            <div className="glass-surface rounded-2xl p-8 md:p-10">
               <h2 className="font-display text-xl font-bold tracking-tight text-[#1a1a1a] md:text-2xl">
                 {t.contactFormTitle}
               </h2>
@@ -82,7 +82,7 @@ export default function ContactPage() {
       </section>
 
       <section className="section-pad">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <CTA
             title={t.readyToStartTitle}
             description={t.readyToStartDesc}

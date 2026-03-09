@@ -31,7 +31,7 @@ export default function GectaroPage() {
         lead={t.gectaroLead}
       />
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
             <div className="overflow-hidden rounded-2xl shadow-xl">
               <PlaceholderImage theme="planning" aspectRatio="4/3" />
@@ -41,10 +41,7 @@ export default function GectaroPage() {
               <div className="section-divider mt-4 mb-8" style={{ marginLeft: 0 }} />
               <ul className="space-y-4">
                 {capabilityKeys.map((key) => (
-                  <li
-                    key={key}
-                    className="flex items-center gap-4 rounded-xl border border-border bg-[#fafaf8] px-5 py-4"
-                  >
+                  <li key={key} className="lux-card flex items-center gap-4 px-5 py-4">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/20 text-primary">
                       ✓
                     </span>
@@ -57,17 +54,14 @@ export default function GectaroPage() {
         </div>
       </section>
       <section className="section-pad bg-bg-alt bg-section-alt">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section text-center">
             {t.gectaroServicesTitle}
           </h2>
           <div className="section-divider mt-4 mb-12" />
           <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
             {serviceKeys.map((key) => (
-              <div
-                key={key}
-                className="flex items-center gap-4 rounded-2xl border border-border bg-surface px-6 py-5 shadow-md"
-              >
+              <div key={key} className="lux-card flex items-center gap-4 px-6 py-5">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 font-semibold text-primary">
                   ✓
                 </span>
@@ -78,7 +72,7 @@ export default function GectaroPage() {
         </div>
       </section>
       <section className="section-pad">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <CTA
             title={t.gectaroCta}
             buttonText={t.contactGectaro}

@@ -1,22 +1,41 @@
 import type { Metadata } from "next";
-import { Syne, Source_Sans_3 } from "next/font/google";
+import {
+  Noto_Sans,
+  Noto_Sans_Armenian,
+  Noto_Serif,
+  Noto_Serif_Armenian,
+} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
 
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-sans",
+const notoSans = Noto_Sans({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-sans-default",
   display: "swap",
   weight: ["400", "500", "600", "700"],
 });
 
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-display",
+const notoSerif = Noto_Serif({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-display-default",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
+});
+
+const notoSansArmenian = Noto_Sans_Armenian({
+  subsets: ["armenian"],
+  variable: "--font-sans-armenian",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const notoSerifArmenian = Noto_Serif_Armenian({
+  subsets: ["armenian"],
+  variable: "--font-display-armenian",
+  display: "swap",
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +50,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${syne.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${notoSans.variable} ${notoSerif.variable} ${notoSansArmenian.variable} ${notoSerifArmenian.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen flex flex-col font-sans">
         <LanguageProvider>
           <Header />

@@ -38,11 +38,11 @@ export default function FAQAccordion({ items, className = "" }: FAQAccordionProp
         return (
           <div
             key={index}
-            className="overflow-hidden rounded-2xl border border-border bg-surface shadow-md transition-shadow hover:shadow-lg"
+            className="overflow-hidden rounded-2xl border border-border bg-surface shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
             <button
               type="button"
-              className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-semibold text-[#1a1a1a] transition-colors hover:bg-[#f5f4f0] md:px-8"
+              className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-semibold text-[#1a1a1a] transition-colors hover:bg-primary-soft md:px-8"
               onClick={() => setOpenIndex(isOpen ? null : index)}
               aria-expanded={isOpen}
             >

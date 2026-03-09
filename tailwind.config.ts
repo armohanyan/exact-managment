@@ -23,8 +23,8 @@ const config: Config = {
         "bg-alt": "#ebe9e3",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans-active)", "system-ui", "sans-serif"],
+        display: ["var(--font-display-active)", "system-ui", "serif"],
       },
       boxShadow: {
         sm: "0 2px 12px rgba(0, 0, 0, 0.06)",

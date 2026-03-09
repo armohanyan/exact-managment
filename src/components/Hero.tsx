@@ -23,8 +23,12 @@ export default function Hero({
     <section
       className={`relative overflow-hidden bg-hero-gradient pb-12 pt-12 md:pb-16 md:pt-16 lg:pb-20 lg:pt-20 ${className}`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(30,77,75,0.08),transparent)]" aria-hidden />
-      <div className="container-narrow relative z-10 text-center">
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(30,77,75,0.12),transparent)]"
+        aria-hidden
+      />
+      <div className="pointer-events-none absolute -top-28 right-0 h-72 w-72 rounded-full bg-accent/20 blur-3xl" aria-hidden />
+      <div className="container-narrow relative z-10 text-center animate-fade-up">
         {subtitle && (
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary md:text-sm">
             {subtitle}
@@ -44,7 +48,7 @@ export default function Hero({
             {lead}
           </p>
         )}
-        {children && <div className="mt-8">{children}</div>}
+        {children && <div className="mt-8 animate-fade-in">{children}</div>}
       </div>
     </section>
   );

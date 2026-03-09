@@ -36,7 +36,7 @@ export default function AboutPage() {
     <>
       <Hero title={t.aboutTitle} lead={t.aboutLead} />
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <p className="text-lead mx-auto max-w-3xl text-center text-[#4d4d4d]">
             {t.aboutCollaborate}
           </p>
@@ -44,24 +44,24 @@ export default function AboutPage() {
       </section>
 
       <section className="section-pad bg-bg-alt bg-section-alt">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section">{t.missionTitle}</h2>
           <div className="section-divider mt-4 mb-8" style={{ marginLeft: 0 }} />
-          <div className="max-w-3xl rounded-2xl border-2 border-primary/15 bg-surface p-8 shadow-md md:p-10">
+          <div className="glass-surface max-w-3xl rounded-2xl p-8 md:p-10">
             <p className="text-lead text-[#4d4d4d]">{t.missionText}</p>
           </div>
         </div>
       </section>
 
       <section className="section-pad">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section">{t.professionalAreasTitle}</h2>
           <div className="section-divider mt-4 mb-10" style={{ marginLeft: 0 }} />
           <ul className="grid gap-4 sm:grid-cols-2">
             {professionalAreaKeys.map((key) => (
               <li
                 key={key}
-                className="flex items-center gap-3 rounded-xl border border-border bg-surface px-5 py-4 shadow-sm transition-shadow hover:shadow-md"
+                className="flex items-center gap-3 rounded-xl border border-border bg-surface px-5 py-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
               >
                 <span className="h-2 w-2 shrink-0 rounded-full bg-accent" />
                 <span className="text-[#4d4d4d]">{t[key]}</span>
@@ -72,7 +72,7 @@ export default function AboutPage() {
       </section>
 
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section text-center">{t.ourTeamTitle}</h2>
           <div className="section-divider mt-4 mb-6" />
           <p className="text-lead mx-auto max-w-2xl text-center text-[#4d4d4d]">
@@ -82,7 +82,7 @@ export default function AboutPage() {
             {teamMembers.map(({ nameKey, roleKey }) => (
               <article
                 key={nameKey}
-                className="group overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-lg card-hover"
+                className="group overflow-hidden lux-card"
               >
                 <div className="aspect-[4/5] w-full overflow-hidden">
                   <PlaceholderImage theme="team" aspectRatio="4/5" />
@@ -101,7 +101,7 @@ export default function AboutPage() {
 
       {/* FAQ */}
       <section id="faq" className="section-pad bg-bg-alt bg-section-alt">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section text-center">{t.faqTitle}</h2>
           <div className="section-divider mt-4 mb-6" />
           <p className="text-lead mx-auto max-w-2xl text-center text-[#4d4d4d]">
@@ -119,7 +119,7 @@ export default function AboutPage() {
       </section>
 
       <section className="section-pad bg-primary">
-        <div className="container-narrow text-center">
+        <div className="container-narrow animate-fade-up text-center">
           <p className="text-xl text-white/90">
             {t.readyToStartDesc}
           </p>

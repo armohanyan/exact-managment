@@ -18,14 +18,14 @@ export default function Card({
 }: CardProps) {
   return (
     <article
-      className={`group rounded-2xl border border-border bg-surface shadow-md card-hover overflow-hidden ${
+      className={`group lux-card card-hover overflow-hidden ${
         noPadding ? "" : "p-6 md:p-8"
       } ${className}`}
     >
       <div className="flex items-start gap-4">
         {number && (
           <span
-            className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-lg font-bold text-primary"
+            className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-lg font-bold text-primary shadow-sm transition-transform duration-300 group-hover:scale-105"
             aria-hidden
           >
             {number}

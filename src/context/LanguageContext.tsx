@@ -23,7 +23,7 @@ function getStoredLang(): Lang {
   if (typeof window === "undefined") return "en";
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "en" || stored === "hy") return stored;
+    if (stored === "en" || stored === "hy" || stored === "ru") return stored;
   } catch {}
   return "en";
 }
@@ -43,12 +43,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(STORAGE_KEY, newLang);
     } catch {}
     if (typeof document !== "undefined") {
-      document.documentElement.lang = newLang === "hy" ? "hy" : "en";
+      document.documentElement.lang = newLang;
     }
   }, []);
 
   useEffect(() => {
-    if (mounted) document.documentElement.lang = lang === "hy" ? "hy" : "en";
+    if (mounted) document.documentElement.lang = lang;
   }, [lang, mounted]);
 
   const t = translations[lang];

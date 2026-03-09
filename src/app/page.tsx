@@ -16,9 +16,9 @@ const whyChooseKeys = [
 ] as const;
 
 const featuredProjects = [
-  { name: "Zephyr Residential District", ongoing: true },
-  { name: "Nur Residential Complex", ongoing: true },
-  { name: "Kanach Tagh Residential District", ongoing: false },
+  { nameKey: "homeProject1Name", ongoing: true },
+  { nameKey: "homeProject2Name", ongoing: true },
+  { nameKey: "homeProject3Name", ongoing: false },
 ];
 
 const allFaqKeys = [
@@ -41,10 +41,10 @@ export default function HomePage() {
       <HeroSlider />
 
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-lead text-[#4d4d4d]">{t.homeIntro}</p>
-            <div className="mt-8 rounded-2xl border-2 border-primary/20 bg-primary/5 px-6 py-5 md:px-8 md:py-6">
+            <div className="glass-surface mt-8 rounded-2xl px-6 py-5 md:px-8 md:py-6">
               <p className="font-display text-lg font-semibold text-primary md:text-xl">
                 {t.homeGoal}
               </p>
@@ -54,7 +54,7 @@ export default function HomePage() {
       </section>
 
       <section className="section-pad bg-bg-alt bg-section-alt">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section text-center">{t.whyChooseTitle}</h2>
           <div className="section-divider mt-4 mb-12" />
           <div className="grid gap-8 sm:grid-cols-1 lg:grid-cols-2">
@@ -68,7 +68,7 @@ export default function HomePage() {
       </section>
 
       <section className="section-pad">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
             <div className="relative overflow-hidden rounded-2xl shadow-lg">
               <PlaceholderImage theme="construction" aspectRatio="4/3" />
@@ -92,24 +92,26 @@ export default function HomePage() {
       </section>
 
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section text-center">{t.homeProjectsTitle}</h2>
           <div className="section-divider mt-4 mb-6" />
           <p className="text-lead mx-auto max-w-2xl text-center text-[#4d4d4d]">
             {t.homeProjectsLead}
           </p>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.map(({ name, ongoing }) => (
+            {featuredProjects.map(({ nameKey, ongoing }) => {
+              const name = t[nameKey as keyof typeof t];
+              return (
               <Link
                 key={name}
                 href="/projects"
-                className="group block overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl"
+                className="group block overflow-hidden lux-card"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <PlaceholderImage theme="building" aspectRatio="16/10" alt={name} />
                   {ongoing && (
                     <span className="absolute top-3 left-3 rounded-full bg-accent px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-primary-dark">
-                      Ongoing
+                      {t.ongoingLabel}
                     </span>
                   )}
                 </div>
@@ -119,7 +121,8 @@ export default function HomePage() {
                   </h3>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
           <div className="mt-10 text-center">
             <Link href="/projects" className="btn-outline">
@@ -131,7 +134,7 @@ export default function HomePage() {
 
       {/* Full FAQ */}
       <section id="faq" className="section-pad bg-bg-alt bg-section-alt">
-        <div className="container-narrow">
+        <div className="container-narrow animate-fade-up">
           <h2 className="heading-section text-center">{t.homeFaqTitle}</h2>
           <div className="section-divider mt-4 mb-6" />
           <p className="text-lead mx-auto max-w-2xl text-center text-[#4d4d4d]">
@@ -144,7 +147,7 @@ export default function HomePage() {
       </section>
 
       <section className="section-pad bg-primary">
-        <div className="container-narrow text-center">
+        <div className="container-narrow animate-fade-up text-center">
           <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
             {t.homeContactTitle}
           </h2>

@@ -4,28 +4,26 @@ import Hero from "@/components/Hero";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-
-const course1TopicKeys = ["course1Topic1", "course1Topic2", "course1Topic3", "course1Topic4"] as const;
-const course2TopicKeys = ["course2Topic1", "course2Topic2", "course2Topic3", "course2Topic4", "course2Topic5", "course2Topic6"] as const;
+import { courseCatalog } from "@/lib/courseData";
 
 function CourseCard({
+  slug,
   title,
   meta,
   topicKeys,
-  registerHref = "#",
 }: {
+  slug: string;
   title: string;
   meta?: { label: string; value: string }[];
   topicKeys: readonly string[];
-  registerHref?: string;
 }) {
   const { t } = useLanguage();
   return (
-    <article className="overflow-hidden rounded-2xl border border-border bg-surface shadow-lg card-hover">
+    <article className="flex h-full flex-col overflow-hidden lux-card card-hover">
       <div className="overflow-hidden">
         <PlaceholderImage theme="planning" aspectRatio="16/10" alt={title} />
       </div>
-      <div className="p-6 md:p-8">
+      <div className="flex flex-1 flex-col p-6 md:p-8">
         <h3 className="font-display text-2xl font-bold tracking-tight text-[#1a1a1a]">
           {title}
         </h3>
@@ -46,8 +44,8 @@ function CourseCard({
             <li key={key}>{t[key as keyof typeof t]}</li>
           ))}
         </ul>
-        <Link href={registerHref} className="btn-primary">
-          {t.registerNow}
+        <Link href={`/training/${slug}`} className="btn-primary mt-auto self-start whitespace-nowrap">
+          {t.viewCourse}
         </Link>
       </div>
     </article>
@@ -57,34 +55,31 @@ function CourseCard({
 export default function TrainingPage() {
   const { t } = useLanguage();
 
-  const course1Meta = [
-    { label: t.location, value: t.course1Location },
-    { label: t.instructor, value: t.course1Instructor },
-    { label: t.format, value: t.course1Format },
-    { label: t.duration, value: t.course1Duration },
-    { label: t.schedule, value: t.course1Schedule },
-  ];
+  const read = (key: string) => t[key as keyof typeof t] as string;
 
   return (
     <>
       <Hero title={t.trainingTitle} lead={t.trainingLead} />
       <section className="section-pad bg-surface">
-        <div className="container-narrow">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <CourseCard
-              title={t.course1Title}
-              meta={course1Meta}
-              topicKeys={[...course1TopicKeys]}
-            />
-            <CourseCard
-              title={t.course2Title}
-              topicKeys={[...course2TopicKeys]}
-            />
+        <div className="container-narrow animate-fade-up">
+          <div className="grid items-stretch gap-10 lg:grid-cols-2">
+            {courseCatalog.map((course) => (
+              <CourseCard
+                key={course.slug}
+                slug={course.slug}
+                title={read(course.titleKey)}
+                meta={course.meta?.map(({ labelKey, valueKey }) => ({
+                  label: read(labelKey),
+                  value: read(valueKey),
+                }))}
+                topicKeys={course.topicKeys}
+              />
+            ))}
           </div>
         </div>
       </section>
       <section className="section-pad bg-primary">
-        <div className="container-narrow text-center">
+        <div className="container-narrow animate-fade-up text-center">
           <p className="text-lg text-white/90">{t.trainingCta}</p>
           <Link
             href="/contact"
