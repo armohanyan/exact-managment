@@ -68,9 +68,6 @@ export default function HeroSlider() {
         <h1 className="heading-display animate-fade-up max-w-4xl text-3xl text-white drop-shadow-md md:text-5xl lg:text-6xl">
           {t.heroHomeTitle}
         </h1>
-        <p className="text-lead animate-fade-in mx-auto mt-6 max-w-2xl text-white/95 drop-shadow-sm">
-          {t.heroHomeLead}
-        </p>
       </div>
 
       {/* Prev / Next */}

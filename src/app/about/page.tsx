@@ -35,13 +35,13 @@ export default function AboutPage() {
   return (
     <>
       <Hero title={t.aboutTitle} lead={t.aboutLead} />
-      <section className="section-pad bg-surface">
-        <div className="container-narrow animate-fade-up">
-          <p className="text-lead mx-auto max-w-3xl text-center text-[#4d4d4d]">
-            {t.aboutCollaborate}
-          </p>
-        </div>
-      </section>
+      {/*<section className="section-pad bg-surface">*/}
+      {/*  <div className="container-narrow animate-fade-up">*/}
+      {/*    <p className="text-lead mx-auto max-w-3xl text-center text-[#4d4d4d]">*/}
+      {/*      {t.aboutCollaborate}*/}
+      {/*    </p>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
       <section className="section-pad bg-bg-alt bg-section-alt">
         <div className="container-narrow animate-fade-up">
