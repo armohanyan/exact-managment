@@ -1,0 +1,66 @@
+{
+  "baseName": "Exact Management",
+  "tables": [
+    {
+      "name": "Courses",
+      "description": "Training courses shown on /training and /training/[slug]",
+      "fields": [
+        { "name": "Slug", "type": "singleLineText", "required": true },
+        { "name": "Title (EN)", "type": "singleLineText" },
+        { "name": "Title (HY)", "type": "singleLineText" },
+        { "name": "Title (RU)", "type": "singleLineText" },
+        { "name": "Overview (EN)", "type": "multilineText" },
+        { "name": "Overview (HY)", "type": "multilineText" },
+        { "name": "Overview (RU)", "type": "multilineText" },
+        { "name": "Topics", "type": "multilineText", "hint": "One topic per line" },
+        { "name": "Outcomes", "type": "multilineText", "hint": "One per line" },
+        { "name": "Audience", "type": "multilineText", "hint": "One per line" },
+        { "name": "Register URL", "type": "url" },
+        { "name": "Location", "type": "singleLineText" },
+        { "name": "Instructor", "type": "singleLineText" },
+        { "name": "Format", "type": "singleLineText" },
+        { "name": "Duration", "type": "singleLineText" },
+        { "name": "Schedule", "type": "singleLineText" },
+        { "name": "Image URL", "type": "url" },
+        { "name": "Sort", "type": "number" }
+      ]
+    },
+    {
+      "name": "Projects",
+      "description": "Done and ongoing projects on /projects",
+      "fields": [
+        { "name": "Name (EN)", "type": "singleLineText" },
+        { "name": "Name (HY)", "type": "singleLineText" },
+        { "name": "Name (RU)", "type": "singleLineText" },
+        { "name": "Description (EN)", "type": "multilineText" },
+        { "name": "Description (HY)", "type": "multilineText" },
+        { "name": "Description (RU)", "type": "multilineText" },
+        { "name": "Status", "type": "singleSelect", "options": ["Ongoing", "Completed"] },
+        { "name": "Image URL", "type": "url" },
+        { "name": "Sort", "type": "number" }
+      ]
+    },
+    {
+      "name": "Team",
+      "description": "Team members on /about",
+      "fields": [
+        { "name": "Name", "type": "singleLineText" },
+        { "name": "Role (EN)", "type": "singleLineText" },
+        { "name": "Role (HY)", "type": "singleLineText" },
+        { "name": "Role (RU)", "type": "singleLineText" },
+        { "name": "Image URL", "type": "url" },
+        { "name": "Sort", "type": "number" }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "description": "Contact form submissions; use Airtable Automation to send email on new record",
+      "fields": [
+        { "name": "Name", "type": "singleLineText" },
+        { "name": "Email", "type": "email" },
+        { "name": "Message", "type": "multilineText" },
+        { "name": "Created", "type": "createdTime" }
+      ]
+    }
+  ]
+}

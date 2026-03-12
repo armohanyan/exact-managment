@@ -7,22 +7,39 @@ export default function ContactForm() {
   const { t } = useLanguage();
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
+    setError(null);
     const form = e.currentTarget;
     const data = new FormData(form);
-    // In production, POST to your API or email service
-    await new Promise((r) => setTimeout(r, 800));
-    setSent(true);
-    form.reset();
-    setSubmitting(false);
+    const name = (data.get("name") as string) || "";
+    const email = (data.get("email") as string) || "";
+    const message = (data.get("message") as string) || "";
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(json.error || "Failed to send");
+      }
+      setSent(true);
+      form.reset();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (sent) {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/90 p-6 text-center text-emerald-900 shadow-sm">
+      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/90 p-6 text-center text-emerald-900 shadow-sm" role="status">
         {t.formSuccess}
       </div>
     );
@@ -69,6 +86,11 @@ export default function ContactForm() {
           placeholder={t.formMessage}
         />
       </div>
+      {error && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
+          {error}
+        </div>
+      )}
       <button
         type="submit"
         disabled={submitting}

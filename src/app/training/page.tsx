@@ -1,23 +1,27 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { courseCatalog } from "@/lib/courseData";
+import type { CourseFromAirtable, FetchStatus } from "@/types";
 
 function CourseCard({
   slug,
   title,
   meta,
   topicKeys,
+  topicsFromAirtable,
 }: {
   slug: string;
   title: string;
   meta?: { label: string; value: string }[];
-  topicKeys: readonly string[];
+  topicKeys?: readonly string[];
+  topicsFromAirtable?: string[];
 }) {
   const { t } = useLanguage();
+  const topics = topicsFromAirtable ?? (topicKeys?.map((key) => t[key as keyof typeof t]) ?? []);
   return (
     <article className="flex h-full flex-col overflow-hidden lux-card card-hover">
       <div className="overflow-hidden">
@@ -40,8 +44,8 @@ function CourseCard({
           {t.topics}
         </p>
         <ul className="mb-8 list-inside space-y-2 text-[#4d4d4d]">
-          {topicKeys.map((key) => (
-            <li key={key}>{t[key as keyof typeof t]}</li>
+          {topics.map((text, i) => (
+            <li key={i}>{text}</li>
           ))}
         </ul>
         <Link href={`/training/${slug}`} className="btn-primary mt-auto self-start whitespace-nowrap">
@@ -53,26 +57,58 @@ function CourseCard({
 }
 
 export default function TrainingPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [airtableCourses, setAirtableCourses] = useState<CourseFromAirtable[] | null>(null);
+  const [status, setStatus] = useState<FetchStatus>("loading");
 
-  const read = (key: string) => t[key as keyof typeof t] as string;
+  useEffect(() => {
+    setStatus("loading");
+    fetch(`/api/courses?lang=${lang}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(r.statusText);
+        return r.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAirtableCourses(data);
+          setStatus("success");
+        } else {
+          setAirtableCourses(null);
+          setStatus("success");
+        }
+      })
+      .catch(() => {
+        setAirtableCourses(null);
+        setStatus("error");
+      });
+  }, [lang]);
+
+  const courses = status === "success" && Array.isArray(airtableCourses) ? airtableCourses : [];
 
   return (
     <>
       <Hero title={t.trainingTitle} lead={t.trainingLead} />
       <section className="section-pad bg-surface">
         <div className="container-narrow animate-fade-up">
+          {status === "loading" && (
+            <div className="mb-8 flex items-center gap-3 text-[#4d4d4d]" role="status" aria-live="polite">
+              <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+              <span>Loading courses…</span>
+            </div>
+          )}
+          {status === "error" && (
+            <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+              Could not load courses. Please try again later.
+            </div>
+          )}
           <div className="grid items-stretch gap-10 lg:grid-cols-2">
-            {courseCatalog.map((course) => (
+            {courses.map((course) => (
               <CourseCard
                 key={course.slug}
                 slug={course.slug}
-                title={read(course.titleKey)}
-                meta={course.meta?.map(({ labelKey, valueKey }) => ({
-                  label: read(labelKey),
-                  value: read(valueKey),
-                }))}
-                topicKeys={course.topicKeys}
+                title={course.title}
+                meta={course.meta}
+                topicsFromAirtable={course.topics}
               />
             ))}
           </div>

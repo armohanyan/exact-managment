@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import CTA from "@/components/CTA";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import type { FetchStatus, ProjectFromAirtable } from "@/types";
 
 const PROJECT_IMAGES = [
   "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1000&q=80",
@@ -13,45 +15,9 @@ const PROJECT_IMAGES = [
   "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1000&q=80",
 ];
 
-const ongoingProjects = [
-  {
-    nameKey: "projZephyrName",
-    descKey: "projZephyrDesc" as const,
-    num: "01",
-    image: PROJECT_IMAGES[0],
-  },
-  {
-    nameKey: "projYeghvardName",
-    descKey: "projYeghvardDesc" as const,
-    num: "02",
-    image: PROJECT_IMAGES[1],
-  },
-  {
-    nameKey: "projNurName",
-    descKey: "projNurDesc" as const,
-    num: "03",
-    image: PROJECT_IMAGES[2],
-  },
-];
-
-const completedProjects = [
-  {
-    nameKey: "projKanachName",
-    descKey: "projKanachDesc" as const,
-    num: "04",
-    image: PROJECT_IMAGES[3],
-  },
-  {
-    nameKey: "projLevel16Name",
-    descKey: "projLevel16Desc" as const,
-    num: "05",
-    image: PROJECT_IMAGES[4],
-  },
-];
-
 function ProjectRow({
   name,
-  descKey,
+  description,
   num,
   image,
   imageLeft,
@@ -59,7 +25,7 @@ function ProjectRow({
   t,
 }: {
   name: string;
-  descKey: string;
+  description: string;
   num: string;
   image: string;
   imageLeft: boolean;
@@ -110,7 +76,7 @@ function ProjectRow({
           {name}
         </h2>
         <p className="mt-5 text-[#4d4d4d] leading-relaxed">
-          {t(descKey)}
+          {description}
         </p>
         <ul className="mt-6 space-y-3 border-t border-border pt-6">
           {[t("projectBullet1"), t("projectBullet2"), t("projectBullet3")].map(
@@ -131,11 +97,71 @@ function ProjectRow({
 }
 
 export default function ProjectsPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [airtableProjects, setAirtableProjects] = useState<ProjectFromAirtable[] | null>(null);
+  const [status, setStatus] = useState<FetchStatus>("loading");
+
+  useEffect(() => {
+    setStatus("loading");
+    fetch(`/api/projects?lang=${lang}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(r.statusText);
+        return r.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAirtableProjects(data);
+          setStatus("success");
+        } else {
+          setAirtableProjects(null);
+          setStatus("success");
+        }
+      })
+      .catch(() => {
+        setAirtableProjects(null);
+        setStatus("error");
+      });
+  }, [lang]);
+
+  const ongoingProjects =
+    status === "success" && Array.isArray(airtableProjects)
+      ? airtableProjects.filter((p) => p.status === "Ongoing").map((p, i) => ({
+          name: p.name,
+          description: p.description,
+          num: String(i + 1).padStart(2, "0"),
+          image: p.imageUrl || PROJECT_IMAGES[i % PROJECT_IMAGES.length],
+        }))
+      : [];
+
+  const completedProjects =
+    status === "success" && Array.isArray(airtableProjects)
+      ? airtableProjects.filter((p) => p.status === "Completed").map((p, i) => ({
+          name: p.name,
+          description: p.description,
+          num: String(i + 1).padStart(2, "0"),
+          image: p.imageUrl || PROJECT_IMAGES[(i + 3) % PROJECT_IMAGES.length],
+        }))
+      : [];
 
   return (
     <>
       <Hero title={t.projectsTitle} lead={t.projectsLead} />
+
+      {status === "loading" && (
+        <div className="section-pad">
+          <div className="container-narrow flex items-center gap-3 text-[#4d4d4d]" role="status" aria-live="polite">
+            <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+            <span>Loading projects…</span>
+          </div>
+        </div>
+      )}
+      {status === "error" && (
+        <div className="section-pad">
+          <div className="container-narrow rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            Could not load projects. Please try again later.
+          </div>
+        </div>
+      )}
 
       <section className="section-pad bg-[#f5f4f0]">
         <div className="container-narrow animate-fade-up">
@@ -149,9 +175,9 @@ export default function ProjectsPage() {
           <div className="mt-14 space-y-8 md:space-y-12">
             {ongoingProjects.map((p, i) => (
               <ProjectRow
-                key={p.nameKey}
-                name={t[p.nameKey as keyof typeof t]}
-                descKey={p.descKey}
+                key={p.num + p.name}
+                name={p.name}
+                description={p.description}
                 num={p.num}
                 image={p.image}
                 imageLeft={i % 2 === 0}
@@ -172,9 +198,9 @@ export default function ProjectsPage() {
           <div className="mt-14 space-y-8 md:space-y-12">
             {completedProjects.map((p, i) => (
               <ProjectRow
-                key={p.nameKey}
-                name={t[p.nameKey as keyof typeof t]}
-                descKey={p.descKey}
+                key={p.num + p.name}
+                name={p.name}
+                description={p.description}
                 num={p.num}
                 image={p.image}
                 imageLeft={i % 2 === 0}

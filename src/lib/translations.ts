@@ -1,4 +1,4 @@
-export type Lang = "en" | "hy" | "ru";
+export type { Lang } from "@/types";
 
 const baseTranslations = {
   en: {

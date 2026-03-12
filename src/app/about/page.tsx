@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import FAQAccordion from "@/components/FAQAccordion";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import type { FetchStatus, TeamMemberFromAirtable } from "@/types";
 
 const professionalAreaKeys = [
   "professionalArea1",
@@ -15,12 +17,6 @@ const professionalAreaKeys = [
   "professionalArea6",
 ] as const;
 
-const teamMembers = [
-  { nameKey: "teamMember1Name" as const, roleKey: "teamMember1Role" as const },
-  { nameKey: "teamMember2Name" as const, roleKey: "teamMember2Role" as const },
-  { nameKey: "teamMember3Name" as const, roleKey: "teamMember3Role" as const },
-];
-
 const allFaqKeys = [
   { q: "faqQ1" as const, a: "faqA1" as const },
   { q: "faqQ2" as const, a: "faqA2" as const },
@@ -30,7 +26,34 @@ const allFaqKeys = [
 ];
 
 export default function AboutPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [airtableTeam, setAirtableTeam] = useState<TeamMemberFromAirtable[] | null>(null);
+  const [status, setStatus] = useState<FetchStatus>("loading");
+
+  useEffect(() => {
+    setStatus("loading");
+    fetch(`/api/team?lang=${lang}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(r.statusText);
+        return r.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setAirtableTeam(data);
+          setStatus("success");
+        } else {
+          setAirtableTeam(null);
+          setStatus("success");
+        }
+      })
+      .catch(() => {
+        setAirtableTeam(null);
+        setStatus("error");
+      });
+  }, [lang]);
+
+  const teamList =
+    status === "success" && Array.isArray(airtableTeam) ? airtableTeam : [];
 
   return (
     <>
@@ -78,20 +101,39 @@ export default function AboutPage() {
           <p className="text-lead mx-auto max-w-2xl text-center text-[#4d4d4d]">
             {t.ourTeamLead}
           </p>
+          {status === "loading" && (
+            <div className="mx-auto mt-14 flex justify-center gap-3 text-[#4d4d4d]" role="status" aria-live="polite">
+              <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+              <span>Loading team…</span>
+            </div>
+          )}
+          {status === "error" && (
+            <div className="mx-auto mt-6 max-w-xl rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm text-amber-900">
+              Could not load team. Please try again later.
+            </div>
+          )}
           <div className="mx-auto mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {teamMembers.map(({ nameKey, roleKey }) => (
+            {teamList.map((member) => (
               <article
-                key={nameKey}
+                key={member.id}
                 className="group overflow-hidden lux-card"
               >
                 <div className="aspect-[4/5] w-full overflow-hidden">
-                  <PlaceholderImage theme="team" aspectRatio="4/5" />
+                  {member.imageUrl ? (
+                    <img
+                      src={member.imageUrl}
+                      alt={member.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <PlaceholderImage theme="team" aspectRatio="4/5" />
+                  )}
                 </div>
                 <div className="border-t border-border bg-surface p-6 text-center">
                   <h3 className="font-display text-xl font-bold tracking-tight text-[#1a1a1a]">
-                    {t[nameKey]}
+                    {member.name}
                   </h3>
-                  <p className="mt-2 text-sm text-[#4d4d4d]">{t[roleKey]}</p>
+                  <p className="mt-2 text-sm text-[#4d4d4d]">{member.role}</p>
                 </div>
               </article>
             ))}

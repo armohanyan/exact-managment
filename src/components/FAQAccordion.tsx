@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-export interface FAQItem {
-  question: string;
-  answer: string;
-}
+import type { FAQItem } from "@/types";
 
 interface FAQAccordionProps {
   items: FAQItem[];

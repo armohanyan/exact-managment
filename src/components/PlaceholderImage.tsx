@@ -1,13 +1,7 @@
 "use client";
 
 import Image from "next/image";
-
-export type PlaceholderTheme =
-  | "construction"
-  | "building"
-  | "planning"
-  | "team"
-  | "default";
+import type { PlaceholderTheme } from "@/types";
 
 const themeLabels: Record<PlaceholderTheme, string> = {
   construction: "Construction site",

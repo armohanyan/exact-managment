@@ -1,16 +1,68 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import { useLanguage } from "@/context/LanguageContext";
-import { getCourseBySlug } from "@/lib/courseData";
+import type { CourseFromAirtable, FetchStatus } from "@/types";
 
 export default function CourseDetailsPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const params = useParams<{ slug: string }>();
-  const course = getCourseBySlug(params.slug);
-  const read = (key: string) => t[key as keyof typeof t] as string;
+  const slug = params.slug;
+  const [course, setCourse] = useState<CourseFromAirtable | null | undefined>(undefined);
+  const [status, setStatus] = useState<FetchStatus>("loading");
+
+  useEffect(() => {
+    setStatus("loading");
+    fetch(`/api/courses?lang=${lang}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(r.statusText);
+        return r.json();
+      })
+      .then((data) => {
+        if (!Array.isArray(data)) {
+          setCourse(null);
+          setStatus("success");
+          return;
+        }
+        const found = data.find((c: CourseFromAirtable) => c.slug === slug);
+        setCourse(found ?? null);
+        setStatus("success");
+      })
+      .catch(() => {
+        setCourse(null);
+        setStatus("error");
+      });
+  }, [lang, slug]);
+
+  if (status === "loading") {
+    return (
+      <section className="section-pad bg-[#ebe9e3]">
+        <div className="container-narrow animate-fade-up flex items-center gap-3 text-[#4d4d4d]" role="status" aria-live="polite">
+          <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <span>Loading course…</span>
+        </div>
+      </section>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <section className="section-pad bg-[#ebe9e3]">
+        <div className="container-narrow animate-fade-up">
+          <div className="glass-surface rounded-2xl p-8">
+            <h1 className="heading-section">Could not load course</h1>
+            <p className="mt-3 text-[#4d4d4d]">Please try again later.</p>
+            <Link href="/training" className="btn-outline mt-6">
+              {t.backToTraining}
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (!course) {
     return (
@@ -35,7 +87,7 @@ export default function CourseDetailsPage() {
           <PlaceholderImage
             theme="planning"
             aspectRatio="16/10"
-            alt={read(course.titleKey)}
+            alt={course.title}
             priority
           />
         </div>
@@ -44,14 +96,13 @@ export default function CourseDetailsPage() {
           <Link href="/training" className="text-sm font-semibold text-primary hover:underline">
             ← {t.backToTraining}
           </Link>
-          <h1 className="mt-4 heading-section">{read(course.titleKey)}</h1>
+          <h1 className="mt-4 heading-section">{course.title}</h1>
 
           {course.meta && course.meta.length > 0 && (
             <ul className="mt-6 space-y-2 text-[#4d4d4d]">
-              {course.meta.map(({ labelKey, valueKey }) => (
-                <li key={labelKey}>
-                  <span className="font-semibold text-[#1a1a1a]">{read(labelKey)}:</span>{" "}
-                  {read(valueKey)}
+              {course.meta.map(({ label, value }) => (
+                <li key={label}>
+                  <span className="font-semibold text-[#1a1a1a]">{label}:</span> {value}
                 </li>
               ))}
             </ul>
@@ -63,7 +114,7 @@ export default function CourseDetailsPage() {
             <h2 className="font-display text-2xl font-bold tracking-tight text-[#1a1a1a]">
               {t.trainingCourseOverview}
             </h2>
-            <p className="mt-4 text-[#4d4d4d]">{read(course.overviewKey)}</p>
+            <p className="mt-4 text-[#4d4d4d]">{course.overview}</p>
           </article>
 
           <article className="lux-card p-6 md:p-8">
@@ -71,8 +122,8 @@ export default function CourseDetailsPage() {
               {t.trainingLearningOutcomes}
             </h2>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-[#4d4d4d]">
-              {course.outcomeKeys.map((key) => (
-                <li key={key}>{read(key)}</li>
+              {course.outcomes.map((text, i) => (
+                <li key={i}>{text}</li>
               ))}
             </ul>
           </article>
@@ -82,8 +133,8 @@ export default function CourseDetailsPage() {
               {t.trainingWhoShouldAttend}
             </h2>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-[#4d4d4d]">
-              {course.audienceKeys.map((key) => (
-                <li key={key}>{read(key)}</li>
+              {course.audience.map((text, i) => (
+                <li key={i}>{text}</li>
               ))}
             </ul>
             <div className="mt-8">
