@@ -106,13 +106,6 @@ export default function HeroSlider() {
           />
         ))}
       </div>
-      <div className="absolute bottom-0 left-0 z-20 h-1 w-full bg-white/20">
-        <div
-          key={index}
-          className="h-full bg-accent animate-[progress_5000ms_linear_forwards]"
-          style={{ width: "100%" }}
-        />
-      </div>
     </section>
   );
 }

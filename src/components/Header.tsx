@@ -8,9 +8,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import type { Lang } from "@/types";
 
 const LANG_OPTIONS: { value: Lang; label: string; flag: string }[] = [
-  { value: "en", label: "ENGLISH", flag: "🇬🇧" },
-  { value: "ru", label: "РУССКИЙ", flag: "🇷🇺" },
-  { value: "hy", label: "ՀԱՅԵՐԵՆ", flag: "🇦🇲" },
+  { value: "en", label: "ENGLISH", flag: "EN" },
+  { value: "ru", label: "РУССКИЙ", flag: "RU" },
+  { value: "hy", label: "ՀԱՅԵՐԵՆ", flag: "AM" },
 ];
 
 const LOGO_SRC = "/logos/image.png";
@@ -49,52 +49,54 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-surface/80 backdrop-blur-xl shadow-sm">
-      <div className="container-narrow flex flex-wrap items-center justify-between gap-3 py-2.5 md:py-3">
-        <Link href="/" className="flex shrink-0 items-center justify-center focus-ring rounded-lg">
-          {!logoError ? (
-            <Image
-              src={LOGO_SRC}
-              alt="Exact Management"
-              width={230}
-              height={76}
-              className="block h-10 w-auto object-contain md:h-14"
-              priority
-              onError={() => setLogoError(true)}
+      <div className="container-narrow flex flex-wrap items-center justify-between gap-x-3 gap-y-0 md:gap-3 py-2.5 md:py-3">
+        <div className="flex w-full items-center justify-between md:w-auto">
+          <Link href="/" className="flex shrink-0 items-center justify-center focus-ring rounded-lg">
+            {!logoError ? (
+              <Image
+                src={LOGO_SRC}
+                alt="Exact Management"
+                width={230}
+                height={76}
+                className="block h-10 w-auto object-contain md:h-14"
+                priority
+                onError={() => setLogoError(true)}
+              />
+            ) : (
+              <span className="font-display text-2xl font-bold tracking-tight text-[#1a1a1a] md:text-3xl">
+                Exact Management
+              </span>
+            )}
+          </Link>
+          <button
+            type="button"
+            className="flex h-6 w-6 shrink-0 flex-col items-center justify-center gap-1 transition-colors md:hidden outline-none focus:outline-none focus:ring-0 active:outline-none active:border-none [-webkit-tap-highlight-color:transparent]"
+            aria-label={navOpen ? t.headerMenuClose : t.headerMenuOpen}
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen(!navOpen)}
+          >
+            <span
+              className={`block h-0.5 w-4 rounded-full bg-[#1a1a1a] transition-all ${
+                navOpen ? "translate-y-1.5 rotate-45" : ""
+              }`}
             />
-          ) : (
-            <span className="font-display text-2xl font-bold tracking-tight text-[#1a1a1a] md:text-3xl">
-              Exact Management
-            </span>
-          )}
-        </Link>
-        <button
-          type="button"
-          className="flex h-9 w-9 shrink-0 flex-col items-center justify-center gap-1.5 rounded-xl border border-border bg-[#f5f4f0] transition-colors hover:bg-primary-soft md:hidden focus-ring"
-          aria-label={navOpen ? t.headerMenuClose : t.headerMenuOpen}
-          aria-expanded={navOpen}
-          onClick={() => setNavOpen(!navOpen)}
-        >
-          <span
-            className={`block h-0.5 w-5 rounded-full bg-[#1a1a1a] transition-all ${
-              navOpen ? "translate-y-2 rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-5 rounded-full bg-[#1a1a1a] transition-all ${
-              navOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block h-0.5 w-5 rounded-full bg-[#1a1a1a] transition-all ${
-              navOpen ? "-translate-y-2 -rotate-45" : ""
-            }`}
-          />
-        </button>
+            <span
+              className={`block h-0.5 w-4 rounded-full bg-[#1a1a1a] transition-all ${
+                navOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-4 rounded-full bg-[#1a1a1a] transition-all ${
+                navOpen ? "-translate-y-1.5 -rotate-45" : ""
+              }`}
+            />
+          </button>
+        </div>
         <nav
           className={`flex w-full flex-col gap-0 md:w-auto md:flex-row md:items-center md:gap-1 ${
             navOpen
-              ? "max-h-[380px] border-t border-border pt-3 md:max-h-none md:border-0 md:pt-0"
-              : "max-h-0 overflow-hidden md:max-h-none md:overflow-visible"
+              ? "mt-3 max-h-[380px] border-t border-border pt-3 md:mt-0 md:max-h-none md:border-0 md:pt-0"
+              : "mt-0 max-h-0 overflow-hidden md:mt-0 md:max-h-none md:overflow-visible"
           }`}
           aria-label={t.mainNavigation}
         >
@@ -130,7 +132,7 @@ export default function Header() {
               aria-haspopup="listbox"
               aria-label={t.languageSwitcher}
             >
-              <span className="text-lg leading-none" aria-hidden>
+              <span className="text-sm leading-none" aria-hidden>
                 {currentLang.flag}
               </span>
               <svg
@@ -163,7 +165,7 @@ export default function Header() {
                       }}
                       className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm font-semibold text-[#1a1a1a] transition-colors hover:bg-[#f5f4f0]"
                     >
-                      <span className="text-lg leading-none" aria-hidden>
+                      <span className="text-sm leading-none" aria-hidden>
                         {option.flag}
                       </span>
                       <span className="flex-1 uppercase tracking-wide">

@@ -62,31 +62,31 @@ function ProjectRow({
         )}
       </div>
       <div
-        className={`flex flex-col justify-center px-8 py-10 md:px-12 md:py-14 lg:px-16 ${
+        className={`flex flex-col justify-center px-6 py-8 sm:px-8 sm:py-10 md:px-12 md:py-14 lg:px-16 ${
           imageLeft ? "md:col-start-2" : "md:col-start-1 md:row-start-1"
         }`}
       >
         <span
-          className="font-display text-sm font-bold tracking-widest text-primary"
+          className="font-display text-xs sm:text-sm font-bold tracking-widest text-primary"
           aria-hidden
         >
           {num}
         </span>
-        <h2 className="font-display mt-2 text-2xl font-bold tracking-tight text-[#1a1a1a] md:text-3xl lg:text-[2rem]">
+        <h2 className="font-display mt-2 text-[1.35rem] leading-tight sm:text-2xl font-bold tracking-tight text-[#1a1a1a] md:text-3xl lg:text-[2rem]">
           {name}
         </h2>
-        <p className="mt-5 text-[#4d4d4d] leading-relaxed">
+        <p className="mt-3 sm:mt-5 text-sm sm:text-base text-[#4d4d4d] leading-relaxed">
           {description}
         </p>
-        <ul className="mt-6 space-y-3 border-t border-border pt-6">
+        <ul className="mt-5 sm:mt-6 space-y-2 sm:space-y-3 border-t border-border pt-5 sm:pt-6">
           {[t("projectBullet1"), t("projectBullet2"), t("projectBullet3")].map(
             (bullet) => (
               <li
                 key={bullet}
-                className="flex items-center gap-3 text-[#4d4d4d]"
+                className="flex items-start sm:items-center gap-2 sm:gap-3 text-sm sm:text-base text-[#4d4d4d]"
               >
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                {bullet}
+                <span className="mt-1.5 sm:mt-0 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span>{bullet}</span>
               </li>
             )
           )}

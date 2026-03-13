@@ -75,13 +75,13 @@ export default function ServicesPage() {
       <Hero title={t.servicesTitle} lead={t.servicesLead} />
       <section className="section-pad bg-surface">
         <div className="container-narrow animate-fade-up">
-          <div className="space-y-16 md:space-y-24">
+          <div className="space-y-12 sm:space-y-16 md:space-y-24">
             {services.map(({ titleKey, itemKeys, num, image, imageAltKey }, i) => {
               const imageLeft = i % 2 === 0;
               return (
                 <article
                   key={titleKey}
-                  className="grid gap-8 overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:grid-cols-2 md:gap-0 md:even:grid-flow-dense"
+                  className="grid gap-0 overflow-hidden rounded-2xl border border-border bg-[#fafaf8] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl md:grid-cols-2 lg:gap-0 md:even:grid-flow-dense"
                 >
                   <div
                     className={`relative aspect-[16/10] md:aspect-auto md:min-h-[320px] ${
@@ -97,20 +97,20 @@ export default function ServicesPage() {
                     />
                   </div>
                   <div
-                    className={`flex flex-col justify-center p-6 md:p-10 lg:p-12 ${
+                    className={`flex flex-col justify-center p-5 sm:p-6 md:p-10 lg:p-12 ${
                       imageLeft ? "md:col-start-2" : "md:col-start-1 md:row-start-1"
                     }`}
                   >
                     <span
-                      className="font-display mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-lg font-bold text-primary"
+                      className="font-display mb-3 inline-flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-base sm:text-lg font-bold text-primary"
                       aria-hidden
                     >
                       {num}
                     </span>
-                    <h2 className="font-display text-2xl font-bold tracking-tight text-[#1a1a1a] md:text-3xl">
+                    <h2 className="font-display text-[1.35rem] leading-tight sm:text-2xl font-bold tracking-tight text-[#1a1a1a] md:text-3xl">
                       {t[titleKey]}
                     </h2>
-                    <ul className="mt-5 space-y-2 pl-4 text-[#4d4d4d] leading-relaxed [list-style-type:disc]">
+                    <ul className="mt-4 sm:mt-5 space-y-1.5 sm:space-y-2 pl-3 sm:pl-4 text-sm sm:text-base text-[#4d4d4d] leading-relaxed [list-style-type:disc]">
                       {itemKeys.map((item) => (
                         <li key={item}>{t[item as keyof typeof t]}</li>
                       ))}
@@ -124,12 +124,12 @@ export default function ServicesPage() {
       </section>
       <section className="section-pad bg-primary">
         <div className="container-narrow animate-fade-up text-center">
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white/90 max-w-2xl mx-auto px-2">
             {t.servicesGectaroNote}
           </p>
           <Link
             href="/gectaro"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-primary-dark transition-all hover:bg-accent-hover"
+            className="mt-5 sm:mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-primary-dark transition-all hover:bg-accent-hover"
           >
             {t.learnGectaro}
           </Link>

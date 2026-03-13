@@ -68,7 +68,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right: contact form */}
-            <div className="glass-surface rounded-2xl p-8 md:p-10">
+            <div className="glass-surface rounded-2xl p-0 md:p-10">
               <h2 className="font-display text-xl font-bold tracking-tight text-[#1a1a1a] md:text-2xl">
                 {t.contactFormTitle}
               </h2>

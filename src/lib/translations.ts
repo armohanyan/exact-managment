@@ -52,7 +52,7 @@ const baseTranslations = {
         "Exact Management is a project management organization specializing in the management of construction and development projects.",
     aboutCollaborate:
         "We collaborate with developers, construction companies, and investors to ensure projects are implemented efficiently and to the highest standards.",
-    missionTitle: "Motto",
+    missionTitle: "Semiotician",
     missionText:
         "We ensure the efficient implementation of construction projects through clear planning, controlled budgeting, and set schedules, while maintaining engineering and regulatory standards.",
     professionalAreasTitle: "Professional Areas",
@@ -314,7 +314,7 @@ const baseTranslations = {
       "Exact Management-ը նախագծերի կառավարման կազմակերպություն է, մասնագիտացած շինարարության և զարգացման նախագծերի կառավարման մեջ:",
     aboutCollaborate:
       "Մենք համագործակցում ենք դևելոպերների, շինարարական ընկերությունների և ներդրողների հետ՝ ապահովելու, որ նախագծերը իրականացվեն արդյունավետ և ամենաբարձր չափանիշներով:",
-    missionTitle: "Լոզունգ",
+    missionTitle: "Նշանաբան",
     missionText:
     "Մենք ապահովում ենք շինարարական նախագծերի արդյունավետ իրականացում՝ հստակ պլանավորմամբ, վերահսկվող բյուջեով և սահմանված ժամանակացույցով՝ պահպանելով ինժեներական և կարգավորող չափանիշները։",
     professionalAreasTitle: "Մասնագիտական ոլորտներ",
@@ -590,7 +590,7 @@ const ru = {
       "Exact Management — организация по управлению проектами, специализирующаяся на управлении строительными и девелоперскими проектами.",
   aboutCollaborate:
       "Мы сотрудничаем с девелоперами, строительными компаниями и инвесторами, чтобы обеспечить эффективную реализацию проектов по самым высоким стандартам.",
-  missionTitle: "Лозунг",
+  missionTitle: "Семиотик",
   missionText:
       "Мы обеспечиваем эффективную реализацию строительных проектов посредством четкого планирования, контролируемого бюджетирования и установленных графиков, соблюдая инженерные и нормативные стандарты.",
   professionalAreasTitle: "Профессиональные области",
