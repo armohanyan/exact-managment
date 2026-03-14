@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import type { HeroContentFromAirtable, HeroSlideFromAirtable } from "@/types";
 
-const SLIDES = [
+const DEFAULT_SLIDES: { image: string; altKey: string }[] = [
   {
     image:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80",
@@ -26,18 +27,47 @@ const INTERVAL_MS = 5000;
 
 export default function HeroSlider() {
   const [index, setIndex] = useState(0);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [heroContent, setHeroContent] = useState<HeroContentFromAirtable | null | undefined>(undefined);
+  const [heroSlides, setHeroSlides] = useState<HeroSlideFromAirtable[]>([]);
 
   useEffect(() => {
+    setHeroContent(undefined);
+    setHeroSlides([]);
+    fetch(`/api/hero?lang=${lang}`)
+      .then((r) => (r.ok ? r.json() : { content: null, slides: [] }))
+      .then((data: { content: HeroContentFromAirtable | null; slides: HeroSlideFromAirtable[] }) => {
+        setHeroContent(data.content ?? null);
+        setHeroSlides(Array.isArray(data.slides) ? data.slides : []);
+      })
+      .catch(() => {
+        setHeroContent(null);
+        setHeroSlides([]);
+      });
+  }, [lang]);
+
+  const title = heroContent?.title ?? t.heroHomeTitle;
+  const subtitle = heroContent?.subtitle ?? t.heroHomeSubtitle;
+  const slides: { image: string; alt: string }[] =
+    heroSlides.length > 0
+      ? heroSlides.map((s) => ({ image: s.imageUrl, alt: s.alt || "Slide" }))
+      : DEFAULT_SLIDES.map((s) => ({
+          image: s.image,
+          alt: t[s.altKey as keyof typeof t],
+        }));
+  const slideCount = slides.length;
+
+  useEffect(() => {
+    if (slideCount === 0) return;
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % SLIDES.length);
+      setIndex((i) => (i + 1) % slideCount);
     }, INTERVAL_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [slideCount]);
 
   return (
-    <section className="relative h-[70vh] min-h-[420px] w-full overflow-hidden md:min-h-[520px] lg:h-[75vh]">
-      {SLIDES.map((slide, i) => (
+    <section className="relative h-[85vh] min-h-[480px] w-full overflow-hidden md:min-h-[560px] lg:min-h-[600px]">
+      {slides.map((slide, i) => (
         <div
           key={i}
           className={`absolute inset-0 transition-opacity duration-700 ${
@@ -46,7 +76,7 @@ export default function HeroSlider() {
         >
           <Image
             src={slide.image}
-            alt={t[slide.altKey as keyof typeof t]}
+            alt={slide.alt}
             fill
             className={`object-cover transition-transform duration-[7000ms] ${
               i === index ? "scale-105" : "scale-100"
@@ -63,17 +93,17 @@ export default function HeroSlider() {
 
       <div className="container-narrow relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white">
         <p className="mb-3 animate-fade-up text-xs font-semibold uppercase tracking-[0.2em] text-accent md:text-sm">
-          {t.heroHomeSubtitle}
+          {subtitle}
         </p>
         <h1 className="heading-display animate-fade-up max-w-4xl text-3xl text-white drop-shadow-md md:text-5xl lg:text-6xl">
-          {t.heroHomeTitle}
+          {title}
         </h1>
       </div>
 
       {/* Prev / Next */}
       <button
         type="button"
-        onClick={() => setIndex((i) => (i - 1 + SLIDES.length) % SLIDES.length)}
+        onClick={() => setIndex((i) => (i - 1 + slideCount) % slideCount)}
         className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-2.5 text-white backdrop-blur-sm transition-colors hover:bg-white/30 md:left-6"
         aria-label={t.heroPrevSlide}
       >
@@ -83,7 +113,7 @@ export default function HeroSlider() {
       </button>
       <button
         type="button"
-        onClick={() => setIndex((i) => (i + 1) % SLIDES.length)}
+        onClick={() => setIndex((i) => (i + 1) % slideCount)}
         className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/20 p-2.5 text-white backdrop-blur-sm transition-colors hover:bg-white/30 md:right-6"
         aria-label={t.heroNextSlide}
       >
@@ -94,7 +124,7 @@ export default function HeroSlider() {
 
       {/* Dots */}
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {SLIDES.map((_, i) => (
+        {slides.map((_, i) => (
           <button
             key={i}
             type="button"

@@ -29,7 +29,7 @@ interface PlaceholderImageProps {
   theme?: PlaceholderTheme;
   alt?: string;
   className?: string;
-  aspectRatio?: "16/10" | "4/3" | "1/1" | "3/2" | "4/5";
+  aspectRatio?: "16/10" | "4/3" | "1/1" | "3/2" | "4/5" | "3/4";
   fill?: boolean;
   priority?: boolean;
   /** Override with custom image URL */
@@ -55,6 +55,7 @@ export default function PlaceholderImage({
     "1/1": "aspect-square",
     "3/2": "aspect-[3/2]",
     "4/5": "aspect-[4/5]",
+    "3/4": "aspect-[3/4]",
   }[aspectRatio];
 
   const label = alt ?? themeLabels[theme];

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import CTA from "@/components/CTA";
 import Image from "next/image";
+import { SkeletonProjectRow } from "@/components/Skeleton";
 import { useLanguage } from "@/context/LanguageContext";
 import type { FetchStatus, ProjectFromAirtable } from "@/types";
 
@@ -148,21 +149,27 @@ export default function ProjectsPage() {
       <Hero title={t.projectsTitle} lead={t.projectsLead} />
 
       {status === "loading" && (
-        <div className="section-pad">
-          <div className="container-narrow flex items-center gap-3 text-[#4d4d4d]" role="status" aria-live="polite">
-            <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-            <span>Loading projects…</span>
+        <section className="section-pad bg-[#f5f4f0]">
+          <div className="container-narrow">
+            <div className="h-8 w-48 animate-pulse rounded bg-[#e5e5e5]" />
+            <div className="mt-6 h-4 w-full max-w-xl animate-pulse rounded bg-[#e5e5e5]" />
+            <div className="mt-14 space-y-8 md:space-y-12" role="status" aria-live="polite">
+              <SkeletonProjectRow imageLeft />
+              <SkeletonProjectRow />
+            </div>
           </div>
-        </div>
+        </section>
       )}
       {status === "error" && (
         <div className="section-pad">
           <div className="container-narrow rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Could not load projects. Please try again later.
+            {t.loadErrorTryAgain}
           </div>
         </div>
       )}
 
+      {status === "success" && (
+      <>
       <section className="section-pad bg-[#f5f4f0]">
         <div className="container-narrow animate-fade-up">
           <h2 className="heading-section max-w-2xl">
@@ -172,6 +179,11 @@ export default function ProjectsPage() {
           <p className="max-w-2xl text-[#4d4d4d] leading-relaxed">
             {t.projectsLead}
           </p>
+          {ongoingProjects.length === 0 ? (
+            <div className="mt-14 rounded-2xl border border-border bg-white/60 px-6 py-10 text-center text-[#4d4d4d] sm:py-14">
+              {t.dataEmptyProjects}
+            </div>
+          ) : (
           <div className="mt-14 space-y-8 md:space-y-12">
             {ongoingProjects.map((p, i) => (
               <ProjectRow
@@ -186,6 +198,7 @@ export default function ProjectsPage() {
               />
             ))}
           </div>
+          )}
         </div>
       </section>
 
@@ -195,6 +208,11 @@ export default function ProjectsPage() {
             {t.completedProjects}
           </h2>
           <div className="section-divider mt-6 mb-12" style={{ marginLeft: 0 }} />
+          {completedProjects.length === 0 ? (
+            <div className="mt-14 rounded-2xl border border-border bg-[#fafaf8] px-6 py-10 text-center text-[#4d4d4d] sm:py-14">
+              {t.dataEmptyProjects}
+            </div>
+          ) : (
           <div className="mt-14 space-y-8 md:space-y-12">
             {completedProjects.map((p, i) => (
               <ProjectRow
@@ -209,6 +227,7 @@ export default function ProjectsPage() {
               />
             ))}
           </div>
+          )}
         </div>
       </section>
 
@@ -222,6 +241,8 @@ export default function ProjectsPage() {
           />
         </div>
       </section>
+      </>
+      )}
     </>
   );
 }

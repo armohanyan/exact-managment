@@ -1,3 +1,3 @@
-export type Lang = "en" | "hy" | "ru";
+export type Lang = "en" | "am" | "ru";
 
 export type FetchStatus = "loading" | "success" | "error";

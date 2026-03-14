@@ -43,12 +43,12 @@ You can either create tables **by hand** (see field list below) or **from the sc
 |----------------|-------------|--------|
 | Slug           | Single line | URL-friendly id, e.g. `project-management-fundamentals` (must be unique) |
 | Title (EN)     | Single line | English title |
-| Title (HY)     | Single line | Armenian title (optional) |
+| Title (AM)     | Single line | Armenian title (optional) |
 | Title (RU)     | Single line | Russian title (optional) |
 | Overview (EN)  | Long text   | Course overview in English |
-| Overview (HY)  | Long text   | Optional |
+| Overview (AM)  | Long text   | Optional |
 | Overview (RU)  | Long text   | Optional |
-| Topics         | Long text   | One topic per line (used for all languages unless you add Topics HY/RU) |
+| Topics         | Long text   | One topic per line (used for all languages unless you add Topics AM/RU) |
 | Outcomes       | Long text   | One outcome per line |
 | Audience       | Long text   | One audience item per line |
 | Register URL   | URL         | Link to registration form |
@@ -65,10 +65,10 @@ You can either create tables **by hand** (see field list below) or **from the sc
 | Field name   | Type        | Notes |
 |--------------|-------------|--------|
 | Name (EN)    | Single line | Project name in English |
-| Name (HY)    | Single line | Optional |
+| Name (AM)    | Single line | Optional (Armenian) |
 | Name (RU)    | Single line | Optional |
 | Description (EN) | Long text | Short description |
-| Description (HY) | Long text | Optional |
+| Description (AM) | Long text | Optional (Armenian) |
 | Description (RU) | Long text | Optional |
 | Status       | Single select | Values: **Ongoing** \| **Completed** (exact spelling) |
 | Image URL    | URL         | Cover image |
@@ -78,9 +78,12 @@ You can either create tables **by hand** (see field list below) or **from the sc
 
 | Field name | Type        | Notes |
 |------------|-------------|--------|
-| Name       | Single line | Full name |
+| Name       | Single line | Fallback if lang-specific empty |
+| Name (EN)  | Single line | Name in English |
+| Name (AM)  | Single line | Optional (Armenian) |
+| Name (RU)  | Single line | Optional (Russian) |
 | Role (EN)  | Single line | Role in English |
-| Role (HY)  | Single line | Optional |
+| Role (AM)  | Single line | Optional (Armenian) |
 | Role (RU)  | Single line | Optional |
 | Image URL  | URL         | Optional photo |
 | Sort       | Number      | Optional; lower = first |

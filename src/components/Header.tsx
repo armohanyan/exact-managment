@@ -10,7 +10,7 @@ import type { Lang } from "@/types";
 const LANG_OPTIONS: { value: Lang; label: string; flag: string }[] = [
   { value: "en", label: "ENGLISH", flag: "EN" },
   { value: "ru", label: "РУССКИЙ", flag: "RU" },
-  { value: "hy", label: "ՀԱՅԵՐԵՆ", flag: "AM" },
+  { value: "am", label: "ՀԱՅԵՐԵՆ", flag: "AM" },
 ];
 
 const LOGO_SRC = "/logos/image.png";

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import FAQAccordion from "@/components/FAQAccordion";
+import { SkeletonTeamGrid } from "@/components/Skeleton";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import type { FetchStatus, TeamMemberFromAirtable } from "@/types";
@@ -104,23 +105,28 @@ export default function AboutPage() {
             {t.ourTeamLead}
           </p>
           {status === "loading" && (
-            <div className="mx-auto mt-10 sm:mt-14 flex justify-center gap-3 text-[#4d4d4d]" role="status" aria-live="polite">
-              <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-              <span>Loading team…</span>
+            <div className="mx-auto mt-10 sm:mt-14" role="status" aria-live="polite">
+              <SkeletonTeamGrid count={6} />
             </div>
           )}
           {status === "error" && (
             <div className="mx-auto mt-6 max-w-xl rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm text-amber-900">
-              Could not load team. Please try again later.
+              {t.loadErrorTryAgain}
             </div>
           )}
-          <div className="mx-auto mt-10 sm:mt-14 grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {status === "success" && teamList.length === 0 && (
+            <div className="mx-auto mt-10 max-w-xl rounded-2xl border border-border bg-[#fafaf8] px-6 py-10 text-center text-[#4d4d4d] sm:mt-14 sm:py-14">
+              {t.dataEmptyTeam}
+            </div>
+          )}
+          {status === "success" && teamList.length > 0 && (
+          <div className="mx-auto mt-10 sm:mt-14 grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8 lg:grid-cols-3 max-w-4xl lg:max-w-none">
             {teamList.map((member) => (
               <article
                 key={member.id}
                 className="group overflow-hidden lux-card"
               >
-                <div className="aspect-[4/5] w-full overflow-hidden">
+                <div className="aspect-square w-full overflow-hidden">
                   {member.imageUrl ? (
                     <img
                       src={member.imageUrl}
@@ -128,18 +134,19 @@ export default function AboutPage() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <PlaceholderImage theme="team" aspectRatio="4/5" />
+                    <PlaceholderImage theme="team" aspectRatio="1/1" />
                   )}
                 </div>
-                <div className="border-t border-border bg-surface p-5 sm:p-6 text-center">
-                  <h3 className="font-display text-lg sm:text-xl font-bold tracking-tight text-[#1a1a1a]">
+                <div className="border-t border-border bg-surface p-3 sm:p-4 lg:p-5 text-center">
+                  <h3 className="font-display text-sm sm:text-lg lg:text-xl font-bold tracking-tight text-[#1a1a1a]">
                     {member.name}
                   </h3>
-                  <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-[#4d4d4d] uppercase tracking-wide font-semibold">{member.role}</p>
+                  <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs lg:text-sm text-[#4d4d4d] uppercase tracking-wide font-semibold">{member.role}</p>
                 </div>
               </article>
             ))}
           </div>
+          )}
         </div>
       </section>
 

@@ -2,18 +2,14 @@
 /**
  * Create Airtable tables and fields from airtable-setup/schema.json
  *
- * Requires:
- *   - AIRTABLE_API_KEY (Personal Access Token with scope schema.bases:write + schema.bases:read)
- *   - AIRTABLE_BASE_ID (the base must already exist; this script only adds tables to it)
+ * Requires: AIRTABLE_API_KEY, AIRTABLE_BASE_ID (in .env or environment)
  *
  * Run from project root:
  *   node airtable-setup/create-base-from-schema.js
- *
- * Or with env from .env (e.g. node -r dotenv/config airtable-setup/create-base-from-schema.js)
  */
-
 const fs = require("fs");
 const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
 const BASE = process.env.AIRTABLE_BASE_ID?.trim() || "";
 const TOKEN = process.env.AIRTABLE_API_KEY?.trim() || "";
@@ -111,10 +107,10 @@ async function createTable(baseId, tableSpec) {
 
 async function main() {
   if (!TOKEN || !BASE) {
-    console.error("Missing AIRTABLE_API_KEY or AIRTABLE_BASE_ID.");
-    console.error("Create a base in Airtable first, then run:");
-    console.error("  AIRTABLE_BASE_ID=appXXX AIRTABLE_API_KEY=patXXX node airtable-setup/create-base-from-schema.js");
-    console.error("Token must have scopes: schema.bases:read, schema.bases:write (and data.records:read/write for the app).");
+    console.error("Missing AIRTABLE_BASE_ID or AIRTABLE_API_KEY.");
+    console.error("  Put them in a .env file in the project root, then run from project root:");
+    console.error("  node airtable-setup/create-base-from-schema.js");
+    console.error("  (Folder is airtable-setup, not airtable.)");
     process.exit(1);
   }
 

@@ -1,5 +1,10 @@
 export type { Lang } from "@/types";
 
+/**
+ * UI and static copy only. Dynamic content (courses, projects, team, hero title/subtitle/lead, hero slide alts)
+ * is loaded from Airtable. heroHomeTitle, heroHomeSubtitle, heroHomeLead and heroSlide1Alt–3Alt are fallbacks
+ * when Airtable Hero/HeroSlides are empty.
+ */
 const baseTranslations = {
   en: {
     navHome: "Home",
@@ -65,12 +70,6 @@ const baseTranslations = {
     ourTeamTitle: "Our Team",
     ourTeamLead:
         "Our team combines construction management experience with the Gectaro digital platform to ensure structured and transparent project implementation.",
-    teamMember1Name: "Management",
-    teamMember1Role: "Project Management and Strategy",
-    teamMember2Name: "Operations",
-    teamMember2Role: "Construction and Development Implementation",
-    teamMember3Name: "Digital and Systems",
-    teamMember3Role: "Gectaro System Implementation and Process Management",
     servicesTitle: "Services",
     service1Title: "Development Project Management",
     service2Title: "Construction Project Management",
@@ -120,16 +119,6 @@ const baseTranslations = {
     projectBullet1: "Full Project Management",
     projectBullet2: "Schedule and Cost Control",
     projectBullet3: "Quality Control and Compliance",
-    projZephyrName: "Zephyr Residential District",
-    projYeghvardName: "Townhouses in Yeghvard",
-    projNurName: "Nur Residential Complex",
-    projKanachName: "Kanach Tagh Residential District",
-    projLevel16Name: "Level 16 Residential Complex",
-    projZephyrDesc: "Large residential district with modern infrastructure and green zones. We manage project planning, construction, and final delivery.",
-    projYeghvardDesc: "Boutique urban residential project. We manage the entire process from design coordination to final delivery and launch.",
-    projNurDesc: "Residential complex with full development and construction management within a single controlled framework.",
-    projKanachDesc: "Residential district implemented with a set schedule, controlled budget, and high quality control from concept to completion.",
-    projLevel16Desc: "High-rise residential complex with full project management including tender organization, contractor coordination, and final delivery.",
     gectaroTitle: "Gectaro",
     gectaroSubtitle: "Digital Project Management",
     gectaroLead:
@@ -151,8 +140,6 @@ const baseTranslations = {
     trainingTitle: "Training",
     trainingLead:
         "Professional training in project management and construction project management. Practical skills you can apply immediately.",
-    course1Title: "Fundamentals of Project Management",
-    course2Title: "Construction Project Management",
     location: "Location",
     instructor: "Instructor",
     format: "Format",
@@ -168,37 +155,6 @@ const baseTranslations = {
     courseNotFoundTitle: "Course Not Found",
     courseNotFoundBody:
         "The requested training page was not found. Please select a course from the training list.",
-    course1Location: "Yerevan, Armenia",
-    course1Instructor: "Mushegh Avetisyan",
-    course1Format: "In-person",
-    course1Duration: "6 weeks",
-    course1Schedule: "Tuesday and Thursday, 18:00–20:00",
-    course1Overview:
-        "Get essential PM tools, planning methods, and practical communication approaches. The program is designed for direct application to real projects.",
-    course1Outcome1: "Understand project phases from initiation to completion",
-    course1Outcome2: "Define clear scope, requirements, and priorities",
-    course1Outcome3: "Create a schedule and allocate resources effectively",
-    course1Outcome4: "Manage risks and communication with confidence",
-    course1Audience1: "For beginners and junior project managers",
-    course1Audience2: "For specialists and team leads coordinating work",
-    course1Topic1: "Project Life Cycle",
-    course1Topic2: "Scope and Requirements",
-    course1Topic3: "Schedule and Resources",
-    course1Topic4: "Risk and Communication Management",
-    course2Overview:
-        "Learn practical approaches to construction project management from planning to delivery. The course includes stakeholder coordination, cost and quality control, and maintaining work according to the schedule.",
-    course2Outcome1: "Plan construction work in stages and dependencies",
-    course2Outcome2: "Effectively coordinate design, contractors, and the site",
-    course2Outcome3: "Apply cost and quality control methods throughout the project",
-    course2Outcome4: "Use digital monitoring methods with modern PM tools",
-    course2Audience1: "For construction engineers and site coordinators",
-    course2Audience2: "For developers, contractors, and construction project managers",
-    course2Topic1: "Construction Planning",
-    course2Topic2: "Design and Construction Coordination",
-    course2Topic3: "Construction Scheduling",
-    course2Topic4: "Cost and Quality Control",
-    course2Topic5: "Contractor Management",
-    course2Topic6: "Digital Project Management with Gectaro",
     trainingCta: "Contact us for group training or individual programs.",
     faqTitle: "FAQ",
     faqLead: "Frequently asked questions about our services and work style.",
@@ -240,9 +196,6 @@ const baseTranslations = {
     homeProjectsTitle: "Our Implemented Projects",
     homeProjectsLead:
         "We implement residential and commercial projects from planning to final delivery. Below are some of our ongoing and recently completed projects.",
-    homeProject1Name: "Zephyr Residential District",
-    homeProject2Name: "Nur Residential Complex",
-    homeProject3Name: "Kanach Tagh Residential District",
     viewAllProjects: "All Projects",
     homeFaqTitle: "Frequently Asked Questions",
     homeFaqLead:
@@ -262,8 +215,17 @@ const baseTranslations = {
     learnAboutUs: "About Us",
     bookACall: "Book a Call",
     viewOnMap: "Open in Google Maps →",
+    loadingCourses: "Loading courses…",
+    loadingProjects: "Loading projects…",
+    loadingTeam: "Loading team…",
+    loadingCourse: "Loading course…",
+    dataEmptyCourses: "No courses available at the moment. Please check back later.",
+    dataEmptyProjects: "No projects to show right now. Please check back later.",
+    dataEmptyTeam: "No team members to display at the moment. Please check back later.",
+    dataEmptyProjectsHome: "No featured projects at the moment. Check back soon.",
+    loadErrorTryAgain: "Something went wrong. Please try again later.",
   },
-  hy: {
+  am: {
     navHome: "Գլխավոր",
     navAbout: "Մեր մասին",
     navServices: "Ծառայություններ",
@@ -327,12 +289,6 @@ const baseTranslations = {
     ourTeamTitle: "Մեր թիմը",
     ourTeamLead:
       "Մեր թիմը համատեղում է շինարարական կառավարման փորձը և Gectaro թվային հարթակը՝ ապահովելով կառուցվածքային և թափանցիկ նախագծերի իրականացում։",
-    teamMember1Name: "Կառավարում",
-    teamMember1Role: "Նախագծերի կառավարում և ռազմավարություն",
-    teamMember2Name: "Գործառնություններ",
-    teamMember2Role: "Շինարարության և զարգացման իրականացում",
-    teamMember3Name: "Թվային և համակարգեր",
-    teamMember3Role: "Gectaro համակարգի ներդրում և գործընթացների կառավարում",
     servicesTitle: "Ծառայություններ",
     service1Title: "Զարգացման նախագծերի կառավարում",
     service2Title: "Շինարարական նախագծերի կառավարում",
@@ -382,16 +338,6 @@ const baseTranslations = {
     projectBullet1: "Լրիվ նախագծերի կառավարում",
     projectBullet2: "Ժամանակացույցի և ծախսերի վերահսկում",
     projectBullet3: "Որակի վերահսկում և համապատասխանություն",
-    projZephyrName: "Zephyr բնակելի թաղամաս",
-    projYeghvardName: "Թաունհաուսներ Եղվարդում",
-    projNurName: "Nur բնակելի համալիր",
-    projKanachName: "Կանաչ Թաղ բնակելի թաղամաս",
-    projLevel16Name: "Level 16 բնակելի համալիր",
-    projZephyrDesc: "Խոշոր բնակելի թաղամաս ժամանակակից ենթակառուցվածքով և կանաչ գոտիներով։ Մենք կառավարում ենք նախագծի պլանավորումը, շինարարությունը և վերջնական հանձնումը։",
-    projYeghvardDesc: "Բուտիկ քաղաքային բնակելի նախագիծ։ Կառավարում ենք ամբողջ գործընթացը՝ նախագծման համակարգումից մինչև վերջնական հանձնում և շահագործման մեկնարկ։",
-    projNurDesc: "Բնակելի համալիր՝ զարգացման և շինարարության ամբողջական կառավարմամբ մեկ միասնական և վերահսկվող շրջանակում։",
-    projKanachDesc: "Բնակելի թաղամաս՝ իրականացված սահմանված ժամանակացույցով, վերահսկվող բյուջեով և բարձր որակի վերահսկմամբ՝ կոնցեպցիայից մինչև ավարտ։",
-    projLevel16Desc: "Բարձրահարկ բնակելի համալիր՝ լիարժեք նախագծերի կառավարմամբ, ներառյալ թենդերների կազմակերպում, կատարողների համակարգում և վերջնական հանձնում։",
     gectaroTitle: "Gectaro",
     gectaroSubtitle: "Թվային նախագծերի կառավարում",
     gectaroLead:
@@ -413,8 +359,6 @@ const baseTranslations = {
     trainingTitle: "Կրթություն",
     trainingLead:
       "Պրոֆեսիոնալ ուսուցում նախագծերի կառավարման և շինարարական նախագծերի կառավարման ոլորտներում: Գործնական հմտություններ, որոնք կարող եք կիրառել անմիջապես:",
-    course1Title: "Նախագծերի կառավարման հիմունքներ",
-    course2Title: "Շինարարական նախագծերի կառավարում",
     location: "Գտնվելու վայր",
     instructor: "Դասընթացավար",
     format: "Ձևաչափ",
@@ -430,48 +374,6 @@ const baseTranslations = {
     courseNotFoundTitle: "Դասընթացը չի գտնվել",
     courseNotFoundBody:
       "Պահանջված ուսուցման էջը չի գտնվել։ Խնդրում ենք ընտրել դասընթաց կրթության ցանկից։",
-    course1Location: "Երևան, Հայաստան",
-    course1Instructor: "Մուշեղ Ավետիսյան",
-    course1Format: "Անձնակազմ",
-    course1Duration: "6 շաբաթ",
-    course1Schedule: "Երեքշաբթի և Հինգշաբթի, 18:00–20:00",
-    course1Overview:
-      "Ստացեք PM-ի հիմնական գործիքները, պլանավորման մեթոդները և հաղորդակցության գործնական մոտեցումներ։ Ծրագիրը նախատեսված է անմիջապես իրական նախագծերում կիրառելու համար։",
-    course1Outcome1:
-      "Հասկանալ նախագծի փուլերը՝ մեկնարկից մինչև ավարտ",
-    course1Outcome2:
-      "Սահմանել հստակ շրջանակ, պահանջներ և առաջնահերթություններ",
-    course1Outcome3:
-      "Կազմել ժամանակացույց և արդյունավետ բաշխել ռեսուրսները",
-    course1Outcome4:
-      "Կառավարել ռիսկերը և հաղորդակցությունը վստահությամբ",
-    course1Audience1: "Սկսնակ և կրտսեր նախագծերի կառավարիչների համար",
-    course1Audience2:
-      "Մասնագետների և թիմերի ղեկավարների համար, ովքեր համակարգում են աշխատանքները",
-    course1Topic1: "Նախագծի կյանքի ցիկլ",
-    course1Topic2: "Շրջանակ և պահանջներ",
-    course1Topic3: "Ժամանակացույց և ռեսուրսներ",
-    course1Topic4: "Ռիսկի և հաղորդակցության կառավարում",
-    course2Overview:
-      "Սովորեք շինարարական նախագծերի կառավարման գործնական մոտեցումներ՝ պլանավորումից մինչև հանձնում։ Դասընթացը ներառում է շահակիցների համակարգում, ծախսերի և որակի վերահսկում, ինչպես նաև աշխատանքների պահպանում ըստ ժամանակացույցի։",
-    course2Outcome1:
-      "Պլանավորել շինարարական աշխատանքները փուլերով և կախվածություններով",
-    course2Outcome2:
-      "Արդյունավետ համակարգել նախագծումը, կատարողներին և շինհրապարակը",
-    course2Outcome3:
-      "Կիրառել ծախսերի և որակի վերահսկման մեթոդներ ամբողջ նախագծում",
-    course2Outcome4:
-      "Օգտագործել թվային մոնիտորինգի մեթոդներ ժամանակակից PM գործիքներով",
-    course2Audience1:
-      "Շինարարական ինժեներների և շինհրապարակի համակարգողների համար",
-    course2Audience2:
-      "Դեվելոպերների, կատարողների և շինարարական նախագծերի ղեկավարների համար",
-    course2Topic1: "Շինարարության պլանավորում",
-    course2Topic2: "Նախագծման և շինարարության համակարգում",
-    course2Topic3: "Շինարարության ժամանակացույց",
-    course2Topic4: "Ծախսերի և որակի վերահսկում",
-    course2Topic5: "Կատարողների կառավարում",
-    course2Topic6: "Թվային նախագծերի կառավարում Gectaro-ով",
     trainingCta: "Խմբային ուսուցման կամ անհատական ծրագրերի համար կապվեք մեզ:",
     faqTitle: "ՀՏՀ",
     faqLead: "Հաճախ տրվող հարցեր մեր ծառայությունների և աշխատանքի ձևի մասին:",
@@ -513,9 +415,6 @@ const baseTranslations = {
     homeProjectsTitle: "Մեր իրականացրած նախագծերը",
     homeProjectsLead:
       "Մենք իրականացնում ենք բնակելի և առևտրային նախագծեր՝ պլանավորումից մինչև վերջնական հանձնում։ Ստորև ներկայացված են մեր ընթացիկ և վերջերս ավարտված նախագծերից մի քանիսը։",
-    homeProject1Name: "Zephyr բնակելի թաղամաս",
-    homeProject2Name: "Nur բնակելի համալիր",
-    homeProject3Name: "Կանաչ Թաղ բնակելի թաղամաս",
     viewAllProjects: "Բոլոր նախագծերը",
     homeFaqTitle: "Հաճախ տրվող հարցեր",
     homeFaqLead:
@@ -535,6 +434,15 @@ const baseTranslations = {
     learnAboutUs: "Մեր մասին",
     bookACall: "Զանգ հաստատել",
     viewOnMap: "Բացել Google Maps-ում →",
+    loadingCourses: "Դասընթացները բեռնվում են…",
+    loadingProjects: "Նախագծերը բեռնվում են…",
+    loadingTeam: "Թիմը բեռնվում է…",
+    loadingCourse: "Դասընթացը բեռնվում է…",
+    dataEmptyCourses: "Այս պահին դասընթացներ չկան: Խնդրում ենք ավելի ուշ ստուգել:",
+    dataEmptyProjects: "Այս պահին ցուցադրելու նախագծեր չկան: Խնդրում ենք ավելի ուշ ստուգել:",
+    dataEmptyTeam: "Այս պահին թիմի անդամներ չեն ցուցադրվում: Խնդրում ենք ավելի ուշ ստուգել:",
+    dataEmptyProjectsHome: "Այս պահին առաջատար նախագծեր չկան: Շուտով ստուգեք:",
+    loadErrorTryAgain: "Ինչ-որ բան սխալ է գնացել: Խնդրում ենք ավելի ուշ կրկին փորձել:",
   },
 } as const;
 
@@ -603,12 +511,6 @@ const ru = {
   ourTeamTitle: "Наша команда",
   ourTeamLead:
       "Наша команда сочетает опыт управления строительством и цифровую платформу Gectaro, обеспечивая структурированную и прозрачную реализацию проектов.",
-  teamMember1Name: "Управление",
-  teamMember1Role: "Управление проектами и стратегия",
-  teamMember2Name: "Операции",
-  teamMember2Role: "Реализация строительства и девелопмента",
-  teamMember3Name: "Цифровые технологии и системы",
-  teamMember3Role: "Внедрение системы Gectaro и управление процессами",
   servicesTitle: "Услуги",
   service1Title: "Управление девелоперскими проектами",
   service2Title: "Управление строительными проектами",
@@ -658,16 +560,6 @@ const ru = {
   projectBullet1: "Полное управление проектами",
   projectBullet2: "Контроль графика и затрат",
   projectBullet3: "Контроль качества и соответствие стандартам",
-  projZephyrName: "Жилой квартал Zephyr",
-  projYeghvardName: "Таунхаусы в Егварде",
-  projNurName: "Жилой комплекс Nur",
-  projKanachName: "Жилой квартал Kanach Tagh",
-  projLevel16Name: "Жилой комплекс Level 16",
-  projZephyrDesc: "Крупный жилой квартал с современной инфраструктурой и зелеными зонами. Мы управляем планированием, строительством и финальной сдачей проекта.",
-  projYeghvardDesc: "Бутик-проект городского жилья. Мы управляем всем процессом от координации проектирования до финальной сдачи и запуска.",
-  projNurDesc: "Жилой комплекс с полным управлением девелопментом и строительством в рамках единой контролируемой структуры.",
-  projKanachDesc: "Жилой квартал, реализованный в установленные сроки, с контролируемым бюджетом и высоким контролем качества от концепции до завершения.",
-  projLevel16Desc: "Высотный жилой комплекс с полным управлением проектом, включая организацию тендеров, координацию подрядчиков и финальную сдачу.",
   gectaroTitle: "Gectaro",
   gectaroSubtitle: "Цифровое управление проектами",
   gectaroLead:
@@ -689,8 +581,6 @@ const ru = {
   trainingTitle: "Обучение",
   trainingLead:
       "Профессиональное обучение в области управления проектами и управления строительными проектами. Практические навыки, которые можно применить немедленно.",
-  course1Title: "Основы управления проектами",
-  course2Title: "Управление строительными проектами",
   location: "Местоположение",
   instructor: "Инструктор",
   format: "Формат",
@@ -706,37 +596,6 @@ const ru = {
   courseNotFoundTitle: "Курс не найден",
   courseNotFoundBody:
       "Запрошенная страница обучения не найдена. Пожалуйста, выберите курс из списка обучения.",
-  course1Location: "Ереван, Армения",
-  course1Instructor: "Мушег Аветисян",
-  course1Format: "Очно",
-  course1Duration: "6 недель",
-  course1Schedule: "Вторник и Четверг, 18:00–20:00",
-  course1Overview:
-      "Получите основные инструменты PM, методы планирования и практические подходы к коммуникации. Программа предназначена для прямого применения в реальных проектах.",
-  course1Outcome1: "Понимать этапы проекта от инициации до завершения",
-  course1Outcome2: "Определять четкие рамки, требования и приоритеты",
-  course1Outcome3: "Составлять график и эффективно распределять ресурсы",
-  course1Outcome4: "Уверенно управлять рисками и коммуникациями",
-  course1Audience1: "Для начинающих и младших менеджеров проектов",
-  course1Audience2: "Для специалистов и руководителей команд, координирующих работу",
-  course1Topic1: "Жизненный цикл проекта",
-  course1Topic2: "Рамки и требования",
-  course1Topic3: "График и ресурсы",
-  course1Topic4: "Управление рисками и коммуникациями",
-  course2Overview:
-      "Изучите практические подходы к управлению строительными проектами от планирования до сдачи. Курс включает координацию стейкхолдеров, контроль затрат и качества, а также соблюдение графика работ.",
-  course2Outcome1: "Планировать строительные работы по этапам и зависимостям",
-  course2Outcome2: "Эффективно координировать проектирование, подрядчиков и площадку",
-  course2Outcome3: "Применять методы контроля затрат и качества на протяжении всего проекта",
-  course2Outcome4: "Использовать методы цифрового мониторинга с современными инструментами PM",
-  course2Audience1: "Для инженеров-строителей и координаторов площадок",
-  course2Audience2: "Для девелоперов, подрядчиков и руководителей строительных проектов",
-  course2Topic1: "Планирование строительства",
-  course2Topic2: "Координация проектирования и строительства",
-  course2Topic3: "График строительства",
-  course2Topic4: "Контроль затрат и качества",
-  course2Topic5: "Управление подрядчиками",
-  course2Topic6: "Цифровое управление проектами с Gectaro",
   trainingCta: "Свяжитесь с нами для группового обучения или индивидуальных программ.",
   faqTitle: "Часто задаваемые вопросы",
   faqLead: "Ответы на популярные вопросы о наших услугах и стиле работы.",
@@ -778,9 +637,6 @@ const ru = {
   homeProjectsTitle: "Наши реализованные проекты",
   homeProjectsLead:
       "Мы реализуем жилые и коммерческие проекты от планирования до финальной сдачи. Ниже представлены некоторые из наших текущих и недавно завершенных проектов.",
-  homeProject1Name: "Жилой квартал Zephyr",
-  homeProject2Name: "Жилой комплекс Nur",
-  homeProject3Name: "Жилой квартал Kanach Tagh",
   viewAllProjects: "Все проекты",
   homeFaqTitle: "Часто задаваемые вопросы",
   homeFaqLead:
@@ -800,6 +656,15 @@ const ru = {
   learnAboutUs: "О нас",
   bookACall: "Заказать звонок",
   viewOnMap: "Открыть в Google Maps →",
+  loadingCourses: "Загрузка курсов…",
+  loadingProjects: "Загрузка проектов…",
+  loadingTeam: "Загрузка команды…",
+  loadingCourse: "Загрузка курса…",
+  dataEmptyCourses: "В данный момент курсов нет. Зайдите позже.",
+  dataEmptyProjects: "В данный момент проектов нет. Зайдите позже.",
+  dataEmptyTeam: "В данный момент нет данных о команде. Зайдите позже.",
+  dataEmptyProjectsHome: "В данный момент нет избранных проектов. Зайдите позже.",
+  loadErrorTryAgain: "Что-то пошло не так. Попробуйте позже.",
 };
 
 export const translations = { ...baseTranslations, ru } as const;

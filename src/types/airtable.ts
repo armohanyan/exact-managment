@@ -3,20 +3,45 @@ export interface AirtableCourseRecord {
   fields: {
     Slug?: string;
     "Title (EN)"?: string;
-    "Title (HY)"?: string;
+    "Title (AM)"?: string;
     "Title (RU)"?: string;
     "Overview (EN)"?: string;
-    "Overview (HY)"?: string;
+    "Overview (AM)"?: string;
     "Overview (RU)"?: string;
+    /** Single field kept for backward compatibility; prefer Topics (EN/AM/RU) */
     Topics?: string;
+    "Topics (EN)"?: string;
+    "Topics (AM)"?: string;
+    "Topics (RU)"?: string;
     Outcomes?: string;
+    "Outcomes (EN)"?: string;
+    "Outcomes (AM)"?: string;
+    "Outcomes (RU)"?: string;
     Audience?: string;
+    "Audience (EN)"?: string;
+    "Audience (AM)"?: string;
+    "Audience (RU)"?: string;
     "Register URL"?: string;
     Location?: string;
+    "Location (EN)"?: string;
+    "Location (AM)"?: string;
+    "Location (RU)"?: string;
     Instructor?: string;
+    "Instructor (EN)"?: string;
+    "Instructor (AM)"?: string;
+    "Instructor (RU)"?: string;
     Format?: string;
+    "Format (EN)"?: string;
+    "Format (AM)"?: string;
+    "Format (RU)"?: string;
     Duration?: string;
+    "Duration (EN)"?: string;
+    "Duration (AM)"?: string;
+    "Duration (RU)"?: string;
     Schedule?: string;
+    "Schedule (EN)"?: string;
+    "Schedule (AM)"?: string;
+    "Schedule (RU)"?: string;
     "Image URL"?: string;
     Sort?: number;
   };
@@ -26,10 +51,10 @@ export interface AirtableProjectRecord {
   id?: string;
   fields: {
     "Name (EN)"?: string;
-    "Name (HY)"?: string;
+    "Name (AM)"?: string;
     "Name (RU)"?: string;
     "Description (EN)"?: string;
-    "Description (HY)"?: string;
+    "Description (AM)"?: string;
     "Description (RU)"?: string;
     Status?: "Ongoing" | "Completed";
     "Image URL"?: string;
@@ -41,8 +66,11 @@ export interface AirtableTeamRecord {
   id?: string;
   fields: {
     Name?: string;
+    "Name (EN)"?: string;
+    "Name (AM)"?: string;
+    "Name (RU)"?: string;
     "Role (EN)"?: string;
-    "Role (HY)"?: string;
+    "Role (AM)"?: string;
     "Role (RU)"?: string;
     "Image URL"?: string;
     Sort?: number;
@@ -81,3 +109,17 @@ export interface TeamMemberFromAirtable {
 
 // Re-export Lang for airtable API usage
 export type { Lang } from "./common";
+
+/** Hero content (one record from Hero table) */
+export interface HeroContentFromAirtable {
+  title: string;
+  subtitle: string;
+  lead: string;
+}
+
+/** Hero slide (from HeroSlides table) */
+export interface HeroSlideFromAirtable {
+  imageUrl: string;
+  alt: string;
+  sort: number;
+}

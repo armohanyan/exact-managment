@@ -6,7 +6,9 @@ export type {
   CourseFromAirtable,
   ProjectFromAirtable,
   TeamMemberFromAirtable,
+  HeroContentFromAirtable,
+  HeroSlideFromAirtable,
 } from "./airtable";
 export type { FAQItem } from "./faq";
 export type { PlaceholderTheme } from "./placeholder";
-export type { CourseDefinition, CourseMeta, TranslationKey } from "./course";
+export type { TranslationKey } from "./course";

@@ -23,7 +23,8 @@ function getStoredLang(): Lang {
   if (typeof window === "undefined") return "en";
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "en" || stored === "hy" || stored === "ru") return stored;
+    if (stored === "en" || stored === "am" || stored === "ru") return stored;
+    if (stored === "hy") return "am"; // migrate legacy
   } catch {}
   return "en";
 }

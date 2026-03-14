@@ -1,12 +1,18 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import HeroSlider from "@/components/HeroSlider";
 import Card from "@/components/Card";
 import CTA from "@/components/CTA";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import FAQAccordion from "@/components/FAQAccordion";
+import Skeleton, { SkeletonCard } from "@/components/Skeleton";
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import type { ProjectFromAirtable } from "@/types";
+
+type ProjectsStatus = "loading" | "success" | "error";
 
 const whyChooseKeys = [
   { title: "whyChoose1Title", body: "whyChoose1Body", num: "01" },
@@ -14,12 +20,6 @@ const whyChooseKeys = [
   { title: "whyChoose3Title", body: "whyChoose3Body", num: "03" },
   { title: "whyChoose4Title", body: "whyChoose4Body", num: "04" },
 ] as const;
-
-const featuredProjects = [
-  { nameKey: "homeProject1Name", ongoing: true },
-  { nameKey: "homeProject2Name", ongoing: true },
-  { nameKey: "homeProject3Name", ongoing: false },
-];
 
 const allFaqKeys = [
   { q: "faqQ1" as const, a: "faqA1" as const },
@@ -30,7 +30,29 @@ const allFaqKeys = [
 ];
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [featuredProjects, setFeaturedProjects] = useState<ProjectFromAirtable[]>([]);
+  const [projectsStatus, setProjectsStatus] = useState<ProjectsStatus>("loading");
+
+  useEffect(() => {
+    setProjectsStatus("loading");
+    fetch(`/api/projects?lang=${lang}`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data: ProjectFromAirtable[]) => {
+        if (Array.isArray(data)) {
+          const completed = data.filter((p) => p.status === "Completed");
+          setFeaturedProjects(completed.slice(0, 3));
+        } else {
+          setFeaturedProjects([]);
+        }
+        setProjectsStatus("success");
+      })
+      .catch(() => {
+        setFeaturedProjects([]);
+        setProjectsStatus("error");
+      });
+  }, [lang]);
+
   const faqItems = allFaqKeys.map(({ q, a }) => ({
     question: t[q],
     answer: t[a],
@@ -42,10 +64,12 @@ export default function HomePage() {
 
       <section className="section-pad bg-surface">
         <div className="container-narrow animate-fade-up">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-lead text-[#4d4d4d]">{t.homeIntro}</p>
-            <div className="glass-surface mt-8 rounded-2xl px-6 py-5 md:px-8 md:py-6">
-              <p className="font-display text-lg font-semibold text-primary md:text-xl">
+          <div className="mx-auto max-w-3xl">
+            <p className="text-center text-lg leading-relaxed text-[#4d4d4d] sm:text-xl sm:leading-relaxed">
+              {t.homeIntro}
+            </p>
+            <div className="mt-10 rounded-2xl border-l-4 border-primary bg-gradient-to-br from-primary/5 to-primary/10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-9">
+              <p className="font-display text-xl font-semibold leading-snug text-[#1a1a1a] sm:text-2xl md:text-[1.6rem]">
                 {t.homeGoal}
               </p>
             </div>
@@ -98,37 +122,69 @@ export default function HomePage() {
           <p className="text-lead mx-auto max-w-2xl text-center text-[#4d4d4d]">
             {t.homeProjectsLead}
           </p>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProjects.map(({ nameKey, ongoing }) => {
-              const name = t[nameKey as keyof typeof t];
-              return (
-              <Link
-                key={name}
-                href="/projects"
-                className="group block overflow-hidden lux-card"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <PlaceholderImage theme="building" aspectRatio="16/10" alt={name} />
-                  {ongoing && (
-                    <span className="absolute top-3 left-3 rounded-full bg-accent px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-primary-dark">
-                      {t.ongoingLabel}
-                    </span>
-                  )}
-                </div>
-                <div className="border-t border-border p-5">
-                  <h3 className="font-display text-lg font-bold tracking-tight text-[#1a1a1a] group-hover:text-primary">
-                    {name}
-                  </h3>
-                </div>
-              </Link>
-              );
-            })}
-          </div>
-          <div className="mt-10 text-center">
-            <Link href="/projects" className="btn-outline">
-              {t.viewAllProjects}
-            </Link>
-          </div>
+
+          {projectsStatus === "loading" && (
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          )}
+
+          {projectsStatus === "success" && featuredProjects.length === 0 && (
+            <div className="mt-12 rounded-2xl border border-border bg-[#fafaf8] px-6 py-10 text-center sm:py-14">
+              <p className="text-[#4d4d4d]">{t.dataEmptyProjectsHome}</p>
+            </div>
+          )}
+
+          {projectsStatus === "success" && featuredProjects.length > 0 && (
+            <>
+              <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {featuredProjects.map((project) => (
+                  <Link
+                    key={project.id}
+                    href="/projects"
+                    className="group block overflow-hidden lux-card"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      {project.imageUrl ? (
+                        <Image
+                          src={project.imageUrl}
+                          alt={project.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <PlaceholderImage theme="building" aspectRatio="16/10" alt={project.name} />
+                      )}
+                      {project.status === "Ongoing" && (
+                        <span className="absolute top-3 left-3 rounded-full bg-accent px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-primary-dark">
+                          {t.ongoingLabel}
+                        </span>
+                      )}
+                    </div>
+                    <div className="border-t border-border p-5">
+                      <h3 className="font-display text-lg font-bold tracking-tight text-[#1a1a1a] group-hover:text-primary">
+                        {project.name}
+                      </h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-10 text-center">
+                <Link href="/projects" className="btn-outline">
+                  {t.viewAllProjects}
+                </Link>
+              </div>
+            </>
+          )}
+
+          {projectsStatus === "error" && (
+            <div className="mt-12 rounded-2xl border border-amber-200 bg-amber-50 px-6 py-10 text-center text-amber-900 sm:py-14">
+              <p>{t.loadErrorTryAgain}</p>
+            </div>
+          )}
         </div>
       </section>
 

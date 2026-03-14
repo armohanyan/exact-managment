@@ -3,9 +3,9 @@ import { fetchProjects } from "@/lib/airtable";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const lang = (searchParams.get("lang") || "en") as "en" | "hy" | "ru";
+  const lang = (searchParams.get("lang") || "en") as "en" | "am" | "ru";
   
-  if (!["en", "hy", "ru"].includes(lang)) {
+  if (!["en", "am", "ru"].includes(lang)) {
     return NextResponse.json({ error: "Invalid lang" }, { status: 400 });
   }
 
